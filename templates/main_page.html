@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Thella Vala</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="SPM Project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/static/styles/css/bootstrap-4.1.3/bootstrap.css">
+<link href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/static/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/static/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/static/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="/static/styles/css/main_styles.css">
+<link rel="stylesheet" type="text/css" href="/static/styles/css/responsive.css">
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header class="header">
+		<div class="header_content d-flex flex-row align-items-center justify-content-start">
+
+			<!-- Hamburger -->
+			<div class="hamburger menu_mm"><i class="fa fa-bars menu_mm" aria-hidden="true"></i></div>
+
+			<!-- Logo -->
+			<div class="header_logo">
+				<a href="#"><div>Th<span>Vala</span></div></a>
+			</div>
+
+			<!-- Navigation -->
+			<nav class="header_nav">
+				<ul class="d-flex flex-row align-items-center justify-content-start">
+					<li><a href="main_page.html">home</a></li>
+					<li><a href="#">fruits</a></li>
+					<li><a href="#">vegetables</a></li>
+					<li><a href="#">my orders</a></li>
+					<li><a href="#">contact</a></li>
+				</ul>
+			</nav>
+
+			<!-- Header Extra -->
+			<div class="header_extra ml-auto d-flex flex-row align-items-center justify-content-start">
+
+
+				<!-- Cart -->
+				<div class="cart d-flex flex-row align-items-center justify-content-start">
+					<div class="cart_icon"><a href="cart.html">
+						<img src="images/bag.png" alt="">
+						<div class="cart_num">2</div>
+					</a></div>
+				</div>
+
+			</div>
+
+		</div>
+	</header>
+
+	<!-- Menu -->
+
+	<div class="menu d-flex flex-column align-items-start justify-content-start menu_mm trans_400">
+		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+		<div class="menu_top d-flex flex-row align-items-center justify-content-start">
+
+		</div>
+		<div class="menu_search">
+			<form action="#" class="header_search_form menu_mm">
+				<input type="search" class="search_input menu_mm" placeholder="Search" required="required">
+				<button class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">
+					<i class="fa fa-search menu_mm" aria-hidden="true"></i>
+				</button>
+			</form>
+		</div>
+		<nav class="menu_nav">
+			<ul class="menu_mm">
+				<li class="menu_mm"><a href="index.html">home</a></li>
+				<li class="menu_mm"><a href="#">fruits</a></li>
+				<li class="menu_mm"><a href="#">vegetbles</a></li>
+				<li class="menu_mm"><a href="#">my orders</a></li>
+				<li class="menu_mm"><a href="contact.html">contact</a></li>
+			</ul>
+		</nav>
+		<div class="menu_extra">
+			<div class="menu_social">
+				<ul>
+					<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+					<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+					<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+					<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sidebar -->
+
+	<div class="sidebar">
+
+		<!-- Info -->
+		<div class="info">
+			<div class="info_content d-flex flex-row align-items-center justify-content-start">
+
+			</div>
+		</div>
+
+		<!-- Logo -->
+		<div class="sidebar_logo">
+			<a href="#"><div>Th<span>Vala</span></div></a>
+		</div>
+
+		<!-- Sidebar Navigation -->
+		<nav class="sidebar_nav">
+			<ul>
+				<li><a href="index.html">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="#">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+			</ul>
+		</nav>
+
+		<!-- Search -->
+		<div class="search">
+			<form action="#" class="search_form" id="sidebar_search_form">
+				<input type="text" class="search_input" placeholder="Search" required="required">
+				<button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
+			</form>
+		</div>
+
+		<!-- Cart -->
+		<div class="cart d-flex flex-row align-items-center justify-content-start">
+			<div class="cart_icon"><a href="cart.html">
+				<img src="images/bag.png" alt="">
+				<div class="cart_num">2</div>
+			</a></div>
+			<div class="cart_text">bag</div>
+			<div class="cart_price">₹39.99 (1)</div>
+		</div>
+	</div>
+
+	<!-- Home -->
+
+	<div class="home">
+
+		<!-- Home Slider -->
+		<div class="home_slider_container">
+			<div class="owl-carousel owl-theme home_slider">
+
+				<!-- Slide -->
+				<div class="owl-item">
+					<div class="background_image" style="background-image:url(https://res.cloudinary.com/growinginteractive/image/upload/q_80/v1502204491/growblog/harvesting-basket-2x.jpg)"></div>
+					<div class="home_content_container">
+						<div class="home_content">
+							<div class="home_discount d-flex flex-row align-items-end justify-content-start">
+								<div class="home_discount_num">20</div>
+								<div class="home_discount_text">Discount on</div>
+							</div>
+							<div class="home_title">Selected Vegetables</div>
+							<div class="button button_1 home_button trans_200"><a href="categories.html">Shop NOW!</a></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Slide -->
+				<div class="owl-item">
+					<div class="background_image" style="background-image:url(https://www.sciencealert.com/images/2018-05/processed/GettyImages-653271350_600.jpg)"></div>
+					<div class="home_content_container">
+						<div class="home_content">
+							<div class="home_discount d-flex flex-row align-items-end justify-content-start">
+								<div class="home_discount_num">20</div>
+								<div class="home_discount_text">Discount on</div>
+							</div>
+							<div class="home_title">Selected Vegetables</div>
+							<div class="button button_1 home_button trans_200"><a href="categories.html">Shop NOW!</a></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Slide -->
+				<div class="owl-item">
+					<div class="background_image" style="background-image:url(https://foodrevolution.org/wp-content/uploads/2018/10/blog-featured-fall_foods-20181015.jpg)"></div>
+					<div class="home_content_container">
+						<div class="home_content">
+							<div class="home_discount d-flex flex-row align-items-end justify-content-start">
+								<div class="home_discount_num">20</div>
+								<div class="home_discount_text">Discount on</div>
+							</div>
+							<div class="home_title">Selected Vegetables</div>
+							<div class="button button_1 home_button trans_200"><a href="categories.html">Shop NOW!</a></div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Home Slider Navigation -->
+			<div class="home_slider_nav home_slider_prev trans_200"><div class=" d-flex flex-column align-items-center justify-content-center"><img src="images/prev.png" alt=""></div></div>
+			<div class="home_slider_nav home_slider_next trans_200"><div class=" d-flex flex-column align-items-center justify-content-center"><img src="images/next.png" alt=""></div></div>
+
+		</div>
+	</div>
+
+	<!-- Boxes -->
+
+	<div class="boxes">
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+
+					<!-- Box -->
+					<div class="col-lg-4 box_col">
+						<div class="box">
+							<div class="box_image"><img src="https://gracesystem.org/wp-content/uploads/2016/10/fresh-produce-e1470234269209.jpg" height = "264" alt=""></div>
+							<div class="box_title trans_200"><a href="categories.html">Fresh Produce</a></div>
+						</div>
+					</div>
+
+					<!-- Box -->
+					<div class="col-lg-4 box_col">
+						<div class="box">
+							<div class="box_image"><img src="http://cookingmatters.org/sites/default/files/recipes/Callaway_FruitSalad.jpg" alt=""></div>
+							<div class="box_title trans_200"><a href="categories.html">Seasonal Fruits</a></div>
+						</div>
+					</div>
+
+					<!-- Box -->
+					<div class="col-lg-4 box_col">
+						<div class="box">
+							<div class="box_image"><img src="https://spanishsabores.com/wp-content/uploads/2013/12/02-IMG_1647.jpg" alt=""></div>
+							<div class="box_title trans_200"><a href="categories.html">Staples</a></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Categories -->
+
+	<div class="categories">
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+					<div class="col text-center">
+						<div class="categories_list_container">
+							<ul class="categories_list d-flex flex-row align-items-center justify-content-start">
+								<li><a href="categories.html">New</a></li>
+								<li><a href="categories.html">recommended</a></li>
+								<li><a href="categories.html">best sellers</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Products -->
+
+	<div class="products">
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="products_container grid">
+
+							<!-- Product -->
+							<div class="product grid-item hot">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y" height="200" alt="">
+										<div class="product_tag">hot</div>
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Tomatoes</a></div>
+										<div class="product_price">Rs.39.90</div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item">
+								<div class="product_inner">
+									<div class="product_image"><img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg" height="200" alt=""></div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Carrots</a></div>
+										<div class="product_price">Rs.19.50</div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item sale">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/high-protein-veggies/388x210_potatoes.jpg" height="200" alt="">
+										<div class="product_tag">sale</div>
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Potatoes</a></div>
+										<div class="product_price">Rs.32.20<span>RRP 64.40</span></div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg" height="200" alt="">
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Cucumber</a></div>
+										<div class="product_price">Rs.59.90</div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg" height="200" alt="">
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Broccoli</a></div>
+										<div class="product_price">Rs.79.90</div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item new">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196" height="200" alt="">
+										<div class="product_tag">new</div>
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Peas</a></div>
+										<div class="product_price">Rs.59.90</div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg" height="200" alt="">
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Cabbage</a></div>
+										<div class="product_price">Rs.15.90</div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Product -->
+							<div class="product grid-item sale">
+								<div class="product_inner">
+									<div class="product_image">
+										<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr" height="200" alt="">
+										<div class="product_tag">sale</div>
+									</div>
+									<div class="product_content text-center">
+										<div class="product_title"><a href="product.html">Onions</a></div>
+										<div class="product_price">Rs.43.99<span>RRP 64.40</span></div>
+										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Newsletter -->
+
+	<div class="newsletter">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="/static/images/newsletter.jpg" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<div class="newsletter_content text-center">
+						<div class="newsletter_title_container">
+							<div class="newsletter_title">subscribe to our newsletter</div>
+							<div class="newsletter_subtitle">we won't spam, we promise!</div>
+						</div>
+						<div class="newsletter_form_container">
+							<form action="#" id="newsletter_form" class="newsletter_form">
+								<input type="email" class="newsletter_input" placeholder="your e-mail here" required="required">
+								<button class="newsletter_button">submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+
+	<footer class="footer">
+		<div class="footer_content">
+			<div class="section_container">
+				<div class="container">
+					<div class="row">
+
+						<!-- About -->
+						<div class="col-xxl-3 col-md-6 footer_col">
+							<div class="footer_about">
+								<!-- Logo -->
+								<div class="footer_logo">
+									<a href="#"><div>a<span>star</span></div></a>
+								</div>
+								<div class="footer_about_text">
+									<p>Vegetables at your doorstep.</p>
+								</div>
+								<div class="cards">
+									<ul class="d-flex flex-row align-items-center justify-content-start">
+										<li><a href="#"><img src="/static/images/card_1.jpg" alt=""></a></li>
+										<li><a href="#"><img src="/static/images/card_2.jpg" alt=""></a></li>
+										<li><a href="#"><img src="/static/images/card_3.jpg" alt=""></a></li>
+										<li><a href="#"><img src="/static/images/card_4.jpg" alt=""></a></li>
+										<li><a href="#"><img src="/static/images/card_5.jpg" alt=""></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Questions -->
+						<div class="col-xxl-3 col-md-6 footer_col">
+							<div class="footer_questions">
+								<div class="footer_title">questions</div>
+								<div class="footer_list">
+									<ul>
+										<li><a href="#">About us</a></li>
+										<li><a href="#">Track Orders</a></li>
+										<li><a href="#">Returns</a></li>
+										<li><a href="#">Jobs</a></li>
+										<li><a href="#">Shipping</a></li>
+										<li><a href="#">Blog</a></li>
+										<li><a href="#">Partners</a></li>
+										<li><a href="#">Bloggers</a></li>
+										<li><a href="#">Support</a></li>
+										<li><a href="#">Terms of Use</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Blog -->
+						<div class="col-xxl-3 col-md-6 footer_col">
+							<div class="footer_blog">
+								<div class="footer_title">blog</div>
+								<div class="footer_blog_container">
+
+									<!-- Blog Item -->
+									<div class="footer_blog_item d-flex flex-row align-items-start justify-content-start">
+										<div class="footer_blog_image"><a href="blog.html"><img src="https://cdn.newsapi.com.au/image/v1/47cc70b4aa5fe866ed87a884b7d89e83" alt=""></a></div>
+										<div class="footer_blog_content">
+											<div class="footer_blog_title"><a href="blog.html">the perfect diet</a></div>
+											<div class="footer_blog_date">june 06, 2018</div>
+											<div class="footer_blog_link"><a href="blog.html">Read More</a></div>
+										</div>
+									</div>
+
+									<!-- Blog Item -->
+									<div class="footer_blog_item d-flex flex-row align-items-start justify-content-start">
+										<div class="footer_blog_image"><a href="blog.html"><img src="https://www.gimmesomeoven.com/wp-content/uploads/2014/03/Cajun-Jambalaya-Recipe-with-Andouille-Sausage-Shrimp-and-Chicken-3-1.jpg" alt=""></a></div>
+										<div class="footer_blog_content">
+											<div class="footer_blog_title"><a href="blog.html">recipe of the week</a></div>
+											<div class="footer_blog_date">june 06, 2018</div>
+											<div class="footer_blog_link"><a href="blog.html">Read More</a></div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<!-- Contact -->
+						<div class="col-xxl-3 col-md-6 footer_col">
+							<div class="footer_contact">
+								<div class="footer_title">contact</div>
+								<div class="footer_contact_list">
+									<ul>
+										<li class="d-flex flex-row align-items-start justify-content-start"><span>C.</span><div>ThelaVala Ltd</div></li>
+										<li class="d-flex flex-row align-items-start justify-content-start"><span>A.</span><div>Shiv Nadar University, Dadri</div></li>
+										<li class="d-flex flex-row align-items-start justify-content-start"><span>T.</span><div>1800 000 0000</div></li>
+										<li class="d-flex flex-row align-items-start justify-content-start"><span>E.</span><div>ThelaVala@gmail.com</div></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Social -->
+		<div class="footer_social">
+			<div class="section_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="footer_social_container d-flex flex-row align-items-center justify-content-between">
+								<!-- Instagram -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+										<div class="footer_social_title">instagram</div>
+									</div>
+								</a>
+								<!-- Google + -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-google-plus" aria-hidden="true"></i></div>
+										<div class="footer_social_title">google +</div>
+									</div>
+								</a>
+								<!-- Pinterest -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-pinterest" aria-hidden="true"></i></div>
+										<div class="footer_social_title">pinterest</div>
+									</div>
+								</a>
+								<!-- Facebook -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+										<div class="footer_social_title">facebook</div>
+									</div>
+								</a>
+								<!-- Twitter -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+										<div class="footer_social_title">twitter</div>
+									</div>
+								</a>
+								<!-- YouTube -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-youtube" aria-hidden="true"></i></div>
+										<div class="footer_social_title">youtube</div>
+									</div>
+								</a>
+								<!-- Tumblr -->
+								<a href="#">
+									<div class="footer_social_item d-flex flex-row align-items-center justify-content-start">
+										<div class="footer_social_icon"><i class="fa fa-tumblr-square" aria-hidden="true"></i></div>
+										<div class="footer_social_title">tumblr</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Credits -->
+		<div class="credits">
+			<div class="section_container">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="credits_content d-flex flex-row align-items-center justify-content-end">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</div>
+
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/styles/bootstrap-4.1.3/popper.js"></script>
+<script src="/static/styles/bootstrap-4.1.3/bootstrap.min.js"></script>
+<script src="/static/plugins/greensock/TweenMax.min.js"></script>
+<script src="/static/plugins/greensock/TimelineMax.min.js"></script>
+<script src="/static/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="/static/plugins/greensock/animation.gsap.min.js"></script>
+<script src="/static/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="/static/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/static/plugins/easing/easing.js"></script>
+<script src="/static/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="/static/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/static/plugins/Isotope/fitcolumns.js"></script>
+<script src="/static/js/custom.js"></script>
+</body>
+</html>

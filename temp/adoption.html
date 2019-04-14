@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+input[type=text] {
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+input[type=password]:focus {
+    border: 3px solid #555;
+}
+label {
+    text-align: center;
+    color: #4CAF50;
+}
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: middle;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+div {
+	width: 50%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+</br>
+</br>
+</br>
+
+<center>
+<div>
+<form action="/pred.html" method="post">
+    <legend>New Production Sales Forecast</legend>
+        <label for="in_RAM">RAM</label><br>
+        <input type="text" id="in_RAM" placeholder="Enter RAM (Gb)" name="ram" list="ram_list">
+        <datalist id="ram_list">
+         <option value="2">2</option>
+          <option>4</option>
+          <option>8</option>
+          <option>12</option>
+        <option>16</option>
+        </datalist>
+        <br>
+        
+        <label for="in_pro">Processor</label><br>
+        <input type="text" id="in_pro" placeholder="Enter Processor (i3->3)" name="proc" list="pro_list">
+        <datalist id="pro_list">
+         <option>3</option>
+          <option>5</option>
+          <option>7</option>
+          <option>8</option>
+        </datalist>
+        
+        <br>
+        <label for="in_battery">Battery (Wt hr)</label><br>
+        <input type="text" id="in_pro" placeholder="Enter Battery" name="battery">
+        
+        <br>
+        <label for="in_gra">Graphics</label><br>
+        <input type="text" id="in_gra" placeholder="Enter Graphics (Gb)" name="graphic" list="gra_list">
+        <datalist id="gra_list">
+         <option>2</option>
+          <option>4</option>
+          <option>8</option>
+          <option>12</option>
+        <option>16</option>
+        </datalist>
+        
+        <br>
+        <label for="in_price">Price</label><br>
+        <input type="text" id="in_price" placeholder="Enter Price (₹)" name="price">
+        
+        <br>
+        
+        <input type="submit" value="Submit">
+</form>
+</div>
+</center>
+</body>
+</html>
