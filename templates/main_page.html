@@ -286,103 +286,117 @@
 							</form>
 
 							<!-- Product -->
-							<div class="product grid-item">
-								<div class="product_inner">
-									<div class="product_image"><img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg" height="200" alt=""></div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Carrots</a></div>
-										<div class="product_price">Rs.19.50</div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_carrot') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item">
+									<div class="product_inner">
+										<div class="product_image"><img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg" height="200" alt=""></div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Carrots</a></div>
+											<div class="product_price">Rs.19.50</div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
-							<div class="product grid-item sale">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/high-protein-veggies/388x210_potatoes.jpg" height="200" alt="">
-										<div class="product_tag">sale</div>
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Potatoes</a></div>
-										<div class="product_price">Rs.32.20<span>RRP 64.40</span></div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_potato') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item sale">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/high-protein-veggies/388x210_potatoes.jpg" height="200" alt="">
+											<div class="product_tag">sale</div>
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Potatoes</a></div>
+											<div class="product_price">Rs.32.20<span>RRP 64.40</span></div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
-							<div class="product grid-item">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg" height="200" alt="">
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Cucumber</a></div>
-										<div class="product_price">Rs.59.90</div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_cucumber') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg" height="200" alt="">
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Cucumber</a></div>
+											<div class="product_price">Rs.59.90</div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
-							<div class="product grid-item">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg" height="200" alt="">
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Broccoli</a></div>
-										<div class="product_price">Rs.79.90</div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_broccoli') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg" height="200" alt="">
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Broccoli</a></div>
+											<div class="product_price">Rs.79.90</div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
-							<div class="product grid-item new">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196" height="200" alt="">
-										<div class="product_tag">new</div>
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Peas</a></div>
-										<div class="product_price">Rs.59.90</div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_peas') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item new">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196" height="200" alt="">
+											<div class="product_tag">new</div>
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Peas</a></div>
+											<div class="product_price">Rs.59.90</div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
-							<div class="product grid-item">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg" height="200" alt="">
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Cabbage</a></div>
-										<div class="product_price">Rs.15.90</div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_cabbage') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg" height="200" alt="">
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Cabbage</a></div>
+											<div class="product_price">Rs.15.90</div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
-							<div class="product grid-item sale">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr" height="200" alt="">
-										<div class="product_tag">sale</div>
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Onions</a></div>
-										<div class="product_price">Rs.43.99<span>RRP 64.40</span></div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_onion') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item sale">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr" height="200" alt="">
+											<div class="product_tag">sale</div>
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Onions</a></div>
+											<div class="product_price">Rs.43.99<span>RRP 64.40</span></div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 						</div>
 					</div>
