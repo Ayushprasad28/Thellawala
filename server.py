@@ -12,7 +12,6 @@ import hashlib
 from pymongo import MongoClient
 
 
-
 app = Flask(__name__)
 client = MongoClient(port=27017)
 db=client.user
@@ -177,3 +176,43 @@ def forgot_password():
 		return "Email/Phone Number not found."
 
 	return render_template('login.html')
+
+@app.route('/add_to_cart', methods=['GET','POST'])
+def add_cart():
+	return 1
+
+@app.route('/cart.html', methods=['GET','POST'])
+def cartup():
+	return render_template('cart.html')
+
+@app.route('/add_tomato', methods=['POST'])
+def add_tomato():
+	import ast
+	import yaml
+	import json
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			print(x['Order'])
+			#orders = ast.literal_eval(x['Order'])
+			orders = x['Order']
+			if 'tomato' in orders.keys():
+				orders['tomato'] += 1
+			else :
+				orders['tomato'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"tomato":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+
+

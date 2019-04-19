@@ -269,19 +269,21 @@
 						<div class="products_container grid">
 
 							<!-- Product -->
-							<div class="product grid-item hot">
-								<div class="product_inner">
-									<div class="product_image">
-										<img src="https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y" height="200" alt="">
-										<div class="product_tag">hot</div>
-									</div>
-									<div class="product_content text-center">
-										<div class="product_title"><a href="product.html">Tomatoes</a></div>
-										<div class="product_price">Rs.39.90</div>
-										<div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div>
+							<form action="{{ url_for('add_tomato') }}" method="post" class="login100-form validate-form" id="form1" >
+								<div class="product grid-item hot">
+									<div class="product_inner">
+										<div class="product_image">
+											<img src="https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y" height="200" alt="">
+											<div class="product_tag">hot</div>
+										</div>
+										<div class="product_content text-center">
+											<div class="product_title"><a href="product.html">Tomatoes</a></div>
+											<div class="product_price">Rs.39.90</div>
+											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</div>
+										</div>
 									</div>
 								</div>
-							</div>
+							</form>
 
 							<!-- Product -->
 							<div class="product grid-item">
