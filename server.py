@@ -216,3 +216,7 @@ def add_tomato():
 	return render_template('main_page.html')
 
 
+@app.route('/blog.html', methods=['GET','POST'])
+def blogup():
+	return render_template('blog.html')
+
