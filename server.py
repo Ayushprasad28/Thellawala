@@ -187,15 +187,10 @@ def cartup():
 
 @app.route('/add_tomato', methods=['POST'])
 def add_tomato():
-	import ast
-	import yaml
-	import json
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
-			print(x['Order'])
-			#orders = ast.literal_eval(x['Order'])
 			orders = x['Order']
 			if 'tomato' in orders.keys():
 				orders['tomato'] += 1
@@ -214,6 +209,192 @@ def add_tomato():
 		}
 		db.cart.insert_one(entry)
 	return render_template('main_page.html')
+@app.route('/add_carrot', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			if 'carrot' in orders.keys():
+				orders['carrot'] += 1
+			else :
+				orders['carrot'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"carrot":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+
+@app.route('/add_potato', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			if 'potato' in orders.keys():
+				orders['potato'] += 1
+			else :
+				orders['potato'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"potato":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+@app.route('/add_cucumber', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			if 'cucumber' in orders.keys():
+				orders['cucumber'] += 1
+			else :
+				orders['cucumber'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"cucumber":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+
+@app.route('/add_broccoli', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			if 'broccoli' in orders.keys():
+				orders['broccoli'] += 1
+			else :
+				orders['broccoli'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"broccoli":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+	
+@app.route('/add_peas', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			if 'peas' in orders.keys():
+				orders['peas'] += 1
+			else :
+				orders['peas'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"peas":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+
+@app.route('/add_cabbage', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			if 'cabbage' in orders.keys():
+				orders['cabbage'] += 1
+			else :
+				orders['cabbage'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"cabbage":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+
+@app.route('/add_onion', methods=['POST'])
+def add_tomato():
+	counter=0
+	userId = '5cacb24a5f627d34c743feb7'
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			print(x['Order'])
+			orders = x['Order']
+			if 'onion' in orders.keys():
+				orders['onion'] += 1
+			else :
+				orders['onion'] = 1
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			counter = 1
+			break
+	if(counter==0) :
+		orders = {"onion":1}
+		entry = {
+		'Customer_Id' : userId,
+		'Order' : orders,
+		}
+		db.cart.insert_one(entry)
+	return render_template('main_page.html')
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/blog.html', methods=['GET','POST'])
