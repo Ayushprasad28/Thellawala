@@ -182,6 +182,13 @@ def result():
 	userId = '5cacb24a5f627d34c743feb7'
 	dicti={}
 	tomato_pic = "https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"
+	carrot_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg"
+	potato_pic = "https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/high-protein-veggies/388x210_potatoes.jpg"
+	cucumber_pic = "https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg"
+	broccoli_pic = "https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg"
+	peas_pic = "https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196"
+	cabbage_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg"
+	onion_pic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr"
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -190,8 +197,28 @@ def result():
 		arr = [] #pic,price,quantity
 		if key=='tomato' :
 			arr.append(tomato_pic)
-			arr.append(18.00)
-
+			arr.append(39.90)
+		elif key=='carrot' :
+			arr.append(carrot_pic)
+			arr.append(19.50)
+		elif key=='potato' :
+			arr.append(potato_pic)
+			arr.append(32.20)
+		elif key=='cucumber' :
+			arr.append(cucumber_pic)
+			arr.append(59.90)
+		elif key=='broccoli' :
+			arr.append(broccoli_pic)
+			arr.append(79.90)
+		elif key=='peas' :
+			arr.append(peas_pic)
+			arr.append(59.90)
+		elif key=='cabbage' :
+			arr.append(cabbage_pic)
+			arr.append(15.90)
+		elif key=='onion' :
+			arr.append(onion_pic)
+			arr.append(43.99)
 		arr.append(value)
 		dicti[key] = arr
 	print(dicti)
