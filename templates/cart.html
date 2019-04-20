@@ -51,7 +51,7 @@
 				<!-- Cart -->
 				<div class="cart d-flex flex-row align-items-center justify-content-start">
 					<div class="cart_icon"><a href="./cart.html">
-						<img src="images/bag.png" alt="">
+						<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
 						<div class="cart_num">2</div>
 					</a></div>
 				</div>
@@ -140,7 +140,7 @@
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
 			<div class="cart_icon"><a href="cart.html">
-				<img src="images/bag.png" alt="">
+				<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
 				<div class="cart_num">2</div>
 			</a></div>
 			<div class="cart_text">bag</div>
@@ -189,23 +189,38 @@
 								<ul class="cart_items_list">
 
 									<!-- Cart Item -->
+									{% for key, value in result.items() %}
 									<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
-											<div><div class="product_image"><img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg" alt=""></div></div>
-											<div class="product_name"><a href="product.html">Carrots</a></div>
+											<div><div class="product_image"><img src={{ value[0] }}></div></div>
+											<div class="product_name"><a href="product.html">{{ key }}</a></div>
 										</div>
-										<div class="product_price text-lg-center product_text"><span>Price: </span>Rs.19.50</div>
+										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ value[1] }}</div>
 										<div class="product_quantity_container">
 											<div class="product_quantity ml-lg-auto mr-lg-auto text-center">
-												<span class="product_text product_num">2</span>
+												<span class="product_text product_num">{{ value[2] }}</span>
 												<div class="qty_sub qty_button trans_200 text-center"><span>-</span></div>
 												<div class="qty_add qty_button trans_200 text-center"><span>+</span></div>
 											</div>
 										</div>
-										<div class="product_total text-lg-center product_text"><span>Total: </span>Rs39.00</div>
+										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ value[1] }}</div>
 									</li>
+									
+								 {% endfor %}
 								</ul>
 							</div>
+
+							<script>
+							function myFunction() {
+							  //var x ="", i;
+							  //for (i=1; i<=6; i++) {
+							   // x = x + "<h" + i + ">Heading " + i + "</h" + i + ">";
+							  //}
+							  document.getElementById("demo").style.display = "none";
+							}
+							window.onload = myFunction;
+							</script>	
+							
 
 							<!-- Cart Buttons -->
 							<div class="cart_buttons d-flex flex-row align-items-start justify-content-start">

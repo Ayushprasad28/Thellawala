@@ -86,11 +86,13 @@
 	  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   $(function() {
     $('#response').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/handle_data', {
+      //$.getJSON($SCRIPT_ROOT + '/handle_data', {
        // a: $('input[name="a"]').val(),
        // b: $('input[name="b"]').val()
-      }, function(data) {
-        $('div[id="response"]').text(data);
+     // }, 
+     function(data) {
+        //$('div[id="response"]').text(data);
+        document.getElementById("response").innerHTML = data;
       });
       return false;
     });

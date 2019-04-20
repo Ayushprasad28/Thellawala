@@ -39,10 +39,6 @@ def login():
 def forgot_pass():
 	return render_template('forgotPassword.html')
 
-@app.route('/cart.html', methods=['GET','POST'])
-def view_cart():
-	print("index returned")
-	return render_template('cart.html')
 
 @app.route('/main_page.html', methods=['GET','POST'])
 def main():
@@ -182,8 +178,25 @@ def add_cart():
 	return 1
 
 @app.route('/cart.html', methods=['GET','POST'])
-def cartup():
-	return render_template('cart.html')
+def result():
+	userId = '5cacb24a5f627d34c743feb7'
+	dicti={}
+	tomato_pic = "https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			break
+	for key,value in orders.items():
+		arr = [] #pic,price,quantity
+		if key=='tomato' :
+			arr.append(tomato_pic)
+			arr.append(18.00)
+
+		arr.append(value)
+		dicti[key] = arr
+	print(dicti)
+	#dicti = {'carrot':[50,18.00],'tomato':[30,14.00]}
+	return render_template('cart.html',result=dicti)
 
 @app.route('/add_tomato', methods=['POST'])
 def add_tomato():
@@ -210,7 +223,7 @@ def add_tomato():
 		db.cart.insert_one(entry)
 	return render_template('main_page.html')
 @app.route('/add_carrot', methods=['POST'])
-def add_tomato():
+def add_carrot():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -235,7 +248,7 @@ def add_tomato():
 	return render_template('main_page.html')
 
 @app.route('/add_potato', methods=['POST'])
-def add_tomato():
+def add_potato():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -258,8 +271,9 @@ def add_tomato():
 		}
 		db.cart.insert_one(entry)
 	return render_template('main_page.html')
+
 @app.route('/add_cucumber', methods=['POST'])
-def add_tomato():
+def add_cucumber():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -284,7 +298,7 @@ def add_tomato():
 	return render_template('main_page.html')
 
 @app.route('/add_broccoli', methods=['POST'])
-def add_tomato():
+def add_broccoli():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -309,7 +323,7 @@ def add_tomato():
 	return render_template('main_page.html')
 	
 @app.route('/add_peas', methods=['POST'])
-def add_tomato():
+def add_peas():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -334,7 +348,7 @@ def add_tomato():
 	return render_template('main_page.html')
 
 @app.route('/add_cabbage', methods=['POST'])
-def add_tomato():
+def add_cabbage():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -359,7 +373,7 @@ def add_tomato():
 	return render_template('main_page.html')
 
 @app.route('/add_onion', methods=['POST'])
-def add_tomato():
+def add_onion():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -383,19 +397,6 @@ def add_tomato():
 		}
 		db.cart.insert_one(entry)
 	return render_template('main_page.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @app.route('/blog.html', methods=['GET','POST'])
 def blogup():
