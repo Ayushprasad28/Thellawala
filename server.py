@@ -42,6 +42,8 @@ def forgot_pass():
 
 @app.route('/main_page.html', methods=['GET','POST'])
 def main():
+	s1 = request.args.get('id')
+	print(s1)
 	print("index returned")
 	return render_template('main_page.html')
 
@@ -53,13 +55,13 @@ def object_id():
 	encoded_password = hashlib.sha512(userPassword.encode()).hexdigest()
 	print(userEmail)
 	print(userPassword)
-
+	print(encoded_password)
 	ret_query = db.info.find_one({'email': userEmail})
 	print("XXXXX")
 	print(ret_query['_id'])
 	try :
 		if ret_query['password'] == encoded_password :
-			return render_template('main_page.html',object_id=ret_query['_id'])
+			return redirect('main_page.html?id='+str(ret_query['_id']))
 		else :
 			#return render_template('index_wrong_pass.html')
 			return jsonify(result="Wrong Password is it.")
