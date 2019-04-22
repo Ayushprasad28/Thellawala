@@ -189,24 +189,7 @@
 								<ul class="cart_items_list">
 
 									<!-- Cart Item -->
-									{% for key, value in result.items() %}
-									<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
-										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
-											<div><div class="product_image"><img src={{ value[0] }}></div></div>
-											<div class="product_name"><a href="product.html">{{ key }}</a></div>
-										</div>
-										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ value[1] }}</div>
-										<div class="product_quantity_container">
-											<div class="product_quantity ml-lg-auto mr-lg-auto text-center">
-												<span class="product_text product_num">{{ value[2] }}</span>
-												<div class="qty_sub qty_button trans_200 text-center"><span>-</span></div>
-												<div class="qty_add qty_button trans_200 text-center"><span>+</span></div>
-											</div>
-										</div>
-										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ value[3] }}</div>
-									</li>
 									
-								 {% endfor %}
 								</ul>
 							</div>
 

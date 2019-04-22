@@ -45,8 +45,8 @@ def main():
 	print("index returned")
 	return render_template('main_page.html')
 
-@app.route('/handle_data', methods=['POST'])
-def handle_data():
+@app.route('/object_id', methods=['GET','POST'])
+def object_id():
 	print("Here")
 	userEmail = request.form['email']
 	userPassword = request.form['pass']
@@ -55,9 +55,11 @@ def handle_data():
 	print(userPassword)
 
 	ret_query = db.info.find_one({'email': userEmail})
+	print("XXXXX")
+	print(ret_query['_id'])
 	try :
 		if ret_query['password'] == encoded_password :
-			return "Log in"
+			return render_template('main_page.html',object_id=ret_query['_id'])
 		else :
 			#return render_template('index_wrong_pass.html')
 			return jsonify(result="Wrong Password is it.")
@@ -177,6 +179,15 @@ def forgot_password():
 def add_cart():
 	return 1
 
+@app.route('/clear_cart', methods=['GET','POST'])
+def clear_cart():
+	userId = '5cacb24a5f627d34c743feb7'
+	orders = {}
+	myquery = { "Customer_Id": userId }
+	newvalues = { "$set" : {"Order": orders }}
+	db.cart.update_one(myquery, newvalues)
+	return render_template('clear_cart.html')
+
 @app.route('/cart.html', methods=['GET','POST'])
 def result():
 	userId = '5cacb24a5f627d34c743feb7'
@@ -220,15 +231,20 @@ def result():
 			arr.append(onion_pic)
 			arr.append(43.99)
 		arr.append(value)
+		arr.append(arr[-2]*arr[-1])
 		dicti[key] = arr
 	print(dicti)
 	#dicti = {'carrot':[50,18.00],'tomato':[30,14.00]}
 	return render_template('cart.html',result=dicti)
 
-@app.route('/add_tomato', methods=['POST'])
+@app.route('/add_tomato', methods=['GET','POST'])
 def add_tomato():
 	counter=0
 	userId = '5cacb24a5f627d34c743feb7'
+	#userId = request.form['object_id']
+	#userId = document.getElementById('object_id');
+	#print('YYYYYYYYY')
+	#print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -249,6 +265,7 @@ def add_tomato():
 		}
 		db.cart.insert_one(entry)
 	return render_template('main_page.html')
+
 @app.route('/add_carrot', methods=['POST'])
 def add_carrot():
 	counter=0
