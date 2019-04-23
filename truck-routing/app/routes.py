@@ -17,9 +17,7 @@ def fn(obj):
 @app.route('/', methods = ['POST'])
 @app.route('/index')
 def index():
-    coords = request.get_json() 
-    order = (coords['latitude'], coords['longitude'])
-    
+
     truck1 = (28.552176, 77.555084)
     truck2 = (28.482101, 77.530849)
     truck3 = (28.607810, 77.227598)
@@ -30,6 +28,17 @@ def index():
     trucks.append(truck3)
     trucks.append(truck4)
 
+    coords = request.get_json()
+    address = request.get_data()
+    
+    if coords is None:
+        url = 'https://maps.googleapis.com/maps/api/geocode/json?' + address + '&key=api_config.apiKey'
+        orderLocationData = requests.get(url).json()
+        order = (orderLocationData['results'][0]['geometry']['location']['lat'],
+                 orderLocationData['results'][0]['geometry']['location']['lng'])
+    else:
+        order = (coords['latitude'], coords['longitude'])
+    
     # url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations=&key='
     url = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins='
 
@@ -40,9 +49,10 @@ def index():
     # print(url)
 
     data = requests.get(url).json()
-    # print(data)
+    print(data)
 
     realTrucks = list()
+
     for index, datarow in enumerate(data['rows'][0]['elements']):
         datarow['truck_location'] = data['destination_addresses'][index]
         realTrucks.append(datarow)
