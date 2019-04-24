@@ -37,7 +37,8 @@
 					<li><a href="index.html">home</a></li>
 					<li><a href="#">Vegetables</a></li>
 					<li><a href="#">Fruits</a></li>
-					<li><a href="#">My Orders</a></li>
+					<li><a href="{{ url_for('previous_order',id=main)}}" method="get">My Orders</a></li>
+					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
 					<li><a href="#">blog</a></li>
 					<li><a href="#">contact</a></li>
 				</ul>
@@ -50,10 +51,10 @@
 
 				<!-- Cart -->
 				<div class="cart d-flex flex-row align-items-center justify-content-start">
-					<div class="cart_icon"><a href="./cart.html">
+					<div class="cart_icon" action="{{ url_for('open_cart')}}" method="get" >
 						<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
-						<div class="cart_num">2</div>
-					</a></div>
+						<div class="cart_num">{{quantity}}</div>
+					</div>
 				</div>
 
 			</div>
@@ -82,10 +83,10 @@
 		</div>
 		<nav class="menu_nav">
 			<ul class="menu_mm">
-				<li class="menu_mm"><a href="./index.html">home</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
 				<li class="menu_mm"><a href="#">vegetables</a></li>
 				<li class="menu_mm"><a href="#">fruits</a></li>
-				<li class="menu_mm"><a href="#">my orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders</a></li>
 				<li class="menu_mm"><a href="./blog.html">blog</a></li>
 				<li class="menu_mm"><a href="./contact.html">contact</a></li>
 			</ul>
@@ -120,10 +121,10 @@
 		<!-- Sidebar Navigation -->
 		<nav class="sidebar_nav">
 			<ul>
-				<li><a href="index.html">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">my Orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my Orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="blog.html">blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 			</ul>
@@ -139,12 +140,12 @@
 
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
-			<div class="cart_icon"><a href="cart.html">
+			<div class="cart_icon"><a href="{{ url_for('open_cart',id=main)}}" method="get">
 				<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
-				<div class="cart_num">2</div>
+				<div class="cart_num">{{quantity}}</div>
 			</a></div>
 			<div class="cart_text">bag</div>
-			<div class="cart_price">Rs.39.99 (1)</div>
+			<div class="cart_price">{{price}}</div>
 		</div>
 	</div>
 
@@ -154,11 +155,11 @@
 		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="" data-speed="0.8"></div>
 		<div class="home_container">
 			<div class="home_content">
-				<div class="home_title">Cart</div>
+				<div class="home_title">Orders</div>
 				<div class="breadcrumbs">
 					<ul class="d-flex flex-row align-items-center justify-content-start">
 						<li><a href="index.html">Home</a></li>
-						<li>Your Cart</li>
+						<li>Your Orders</li>
 					</ul>
 				</div>
 			</div>
@@ -174,13 +175,38 @@
 					<div class="col">
 						<div class="cart_container">
 
+							{% for key, value in previous_order.items() %}
+
+							<div class="cart_bar">
+								<ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-start">
+									<li><b>Invoice Number</b></li>
+									<li><b>Date</b></li>
+									<li><b>Time</b></li>
+									<li><b>Total Price</b></li>
+								</ul>
+							</div>
+
+							<div class="cart_bar">
+								<ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-start">
+
+									<!-- Date Item -->
+									
+									<li>{{ value['Invoice'] }}</li>
+									<li>{{ value['Date'] }}</li>
+									<li>{{ value['Time'] }}</li>
+									<li>{{ value['Price'] }}</li>
+			
+								</ul>
+							</div>
+							<br>
+							{% for keys, values in value['Order'].items() %}
 							<!-- Cart Bar -->
 							<div class="cart_bar">
 								<ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-start">
-									<li>Product</li>
-									<li>Price</li>
-									<li>Quantity</li>
-									<li>Total</li>
+									<li><b>Product</li></b>
+									<li><b>Price</li></b>
+									<li><b>Quantity</li></b>
+									<li><b>Total</li></b>
 								</ul>
 							</div>
 
@@ -189,45 +215,31 @@
 								<ul class="cart_items_list">
 
 									<!-- Cart Item -->
-									{% for key, value in result.items() %}
+									
 									<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
-											<div><div class="product_image"><img src={{ value[0] }}></div></div>
-											<div class="product_name"><a href="product.html">{{ key }}</a></div>
+											<div><div class="product_image"><img src={{ values[2] }}></div></div>
+											<div class="product_name">{{ keys }}</div>
 										</div>
-										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ value[1] }}</div>
-										<div class="product_quantity_container">
-											<div class="product_quantity ml-lg-auto mr-lg-auto text-center">
-												<span class="product_text product_num">{{ value[2] }}</span>
-												<div class="qty_sub qty_button trans_200 text-center"><span>-</span></div>
-												<div class="qty_add qty_button trans_200 text-center"><span>+</span></div>
-											</div>
-										</div>
-										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ value[3] }}</div>
+										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ values[1] }}</div>
+										<div class="product_price text-lg-center product_text"><span>Quantity: </span>{{ values[0] }}</div>
+										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ values[3] }}</div>
 									</li>
-									
-								 {% endfor %}
+								
+								
 								</ul>
 							</div>
 
-							<script>
-							function myFunction() {
-							  //var x ="", i;
-							  //for (i=1; i<=6; i++) {
-							   // x = x + "<h" + i + ">Heading " + i + "</h" + i + ">";
-							  //}
-							  document.getElementById("demo").style.display = "none";
-							}
-							window.onload = myFunction;
-							</script>	
-							
+							{% endfor %}
+
+							{% endfor %}
+
+						
 
 							<!-- Cart Buttons -->
 							<div class="cart_buttons d-flex flex-row align-items-start justify-content-start">
 								<div class="cart_buttons_inner ml-auto d-flex flex-row align-items-start justify-content-start flex-wrap">
-									<div class="button button_continue trans_200"><a href="main_page.html">continue shopping</a></div>
-									<div class="button button_clear trans_200"><a href="{{ url_for('clear_cart') }}">clear cart</a></div>
-									<div class="button button_update trans_200"><a href="categories.html">update cart</a></div>
+									<div class="button button_continue trans_200"><a href="{{ url_for('main',id=main)}}" method="get">continuing shopping</a></div>
 								</div>
 							</div>
 						</div>

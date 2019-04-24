@@ -10,11 +10,23 @@ import math
 import json
 import hashlib
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
 client = MongoClient(port=27017)
 db=client.user
+Order=client.order
+
+
+tomato_pic = "https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"
+carrot_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg"
+potato_pic = "https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/high-protein-veggies/388x210_potatoes.jpg"
+cucumber_pic = "https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg"
+broccoli_pic = "https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg"
+peas_pic = "https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196"
+cabbage_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg"
+onion_pic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr"
 
 
 @app.route("/")
@@ -22,18 +34,17 @@ def hello():
     return "Hello World!"
 
 
-"""
-@app.route('/_add_numbers')
-def add_numbers():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
-    """
-
 @app.route('/login.html', methods=['GET','POST'])
 def login():
 	print("index returned")
-	return render_template('login.html')
+	out={}
+	out = request.args.get('out')
+	if(out=='1'):
+		out={'You have logged out successfully.':1}
+	else:
+		out={}
+	print(out)
+	return render_template('login.html',out=out)
 
 @app.route('/forgotPassword.html', methods=['GET','POST'])
 def forgot_pass():
@@ -42,10 +53,33 @@ def forgot_pass():
 
 @app.route('/main_page.html', methods=['GET','POST'])
 def main():
-	s1 = request.args.get('id')
-	print(s1)
+	userId = request.args.get('id')
+	print(userId)
 	print("index returned")
-	return render_template('main_page.html')
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			print(orders)
+			break
+	price=0
+	for key,value in orders.items():
+		if key=='tomato' :
+			price += (value*39.90)
+		elif key=='carrot' :
+			price += (value*19.50)
+		elif key=='potato' :
+			price += (value*32.20)
+		elif key=='cucumber' :
+			price += (value*59.90)
+		elif key=='broccoli' :
+			price += (value*79.90)
+		elif key=='peas' :
+			price += (value*59.90)
+		elif key=='cabbage' :
+			price += (value*15.90)
+		elif key=='onion' :
+			price += (value*43.99)
+	return render_template('main_page.html',main=userId, quantity =len(orders),price = '₹ '+str(price))
 
 @app.route('/object_id', methods=['GET','POST'])
 def object_id():
@@ -64,7 +98,7 @@ def object_id():
 			return redirect('main_page.html?id='+str(ret_query['_id']))
 		else :
 			#return render_template('index_wrong_pass.html')
-			return jsonify(result="Wrong Password is it.")
+			return render_template('login.html',out={"Entered password is wrong":0})
 			#return "Wrong Password"
 	except TypeError:
 		return "User not recognized \n Try to Sign Up."
@@ -72,6 +106,7 @@ def object_id():
 
 @app.route('/signup.html', methods=['GET','POST'])
 def signup():
+
 	return render_template('signup.html')
 
 @app.route('/handle_signup', methods=['POST'])
@@ -109,28 +144,17 @@ def handle_signup():
 
 		if counter==0 :
 			result=db.info.insert_one(entry)
-			print('Added')
+			for x in db.info.find({},{"_id": 0, "email": 1}):
+				if(x['email']==userEmail):
+					result = x['_id']
+					break
+			return redirect('main_page.html?id='+str(result))
 		else :
 			print('Error')
 
 	return render_template('signup.html')
 
-	#ret_query = db.info.find_one({'email': userEmail})
-	#try :
-	#	if ret_query['password'] == userPassword :
-	#		return "Log in"
-	#	else :
-	#		return render_template('index_wrong_pass.html')
-	#except TypeError:
-	#	return "User not recognized \n Try to Sign Up."
-	#return "Fuck Off"
-
-"""
-@app.route('/forgotPassword.html', methods=['GET','POST'])
-def forgotPassword():
-	return render_template('forgotPassword.html')
-	"""
-
+	
 @app.route('/forgot_password', methods=['POST'])
 def forgot_password():
 	userEmail = request.form['email']
@@ -177,76 +201,82 @@ def forgot_password():
 
 	return render_template('login.html')
 
-@app.route('/add_to_cart', methods=['GET','POST'])
-def add_cart():
-	return 1
 
 @app.route('/clear_cart', methods=['GET','POST'])
 def clear_cart():
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
+	invalid ={"Your Cart is Empty":1}
 	orders = {}
 	myquery = { "Customer_Id": userId }
 	newvalues = { "$set" : {"Order": orders }}
 	db.cart.update_one(myquery, newvalues)
-	return render_template('clear_cart.html')
+	return render_template('cart.html',invalid=invalid, open_cart=orders, main=userId)
 
-@app.route('/cart.html', methods=['GET','POST'])
-def result():
-	userId = '5cacb24a5f627d34c743feb7'
+
+@app.route('/open_cart', methods=['GET','POST'])
+def open_cart():
+	userId = request.args.get('id')
+	print(userId)
 	dicti={}
-	tomato_pic = "https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"
-	carrot_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg"
-	potato_pic = "https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/high-protein-veggies/388x210_potatoes.jpg"
-	cucumber_pic = "https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg"
-	broccoli_pic = "https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg"
-	peas_pic = "https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196"
-	cabbage_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg"
-	onion_pic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr"
+	
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
+			print(orders)
 			break
+	price=0
 	for key,value in orders.items():
 		arr = [] #pic,price,quantity
 		if key=='tomato' :
 			arr.append(tomato_pic)
 			arr.append(39.90)
+			price += (value*39.90)
 		elif key=='carrot' :
 			arr.append(carrot_pic)
 			arr.append(19.50)
+			price += (value*19.50)
 		elif key=='potato' :
 			arr.append(potato_pic)
 			arr.append(32.20)
+			price += (value*32.20)
 		elif key=='cucumber' :
 			arr.append(cucumber_pic)
 			arr.append(59.90)
+			price += (value*59.90)
 		elif key=='broccoli' :
 			arr.append(broccoli_pic)
 			arr.append(79.90)
+			price += (value*79.90)
 		elif key=='peas' :
 			arr.append(peas_pic)
 			arr.append(59.90)
+			price += (value*59.90)
 		elif key=='cabbage' :
 			arr.append(cabbage_pic)
 			arr.append(15.90)
+			price += (value*15.90)
 		elif key=='onion' :
 			arr.append(onion_pic)
 			arr.append(43.99)
+			price += (value*43.99)
 		arr.append(value)
 		arr.append(arr[-2]*arr[-1])
 		dicti[key] = arr
 	print(dicti)
+	if(len(dicti)==0) :
+		invalid ={"Your Cart is Empty":1}
+	else:
+		invalid = {}
 	#dicti = {'carrot':[50,18.00],'tomato':[30,14.00]}
-	return render_template('cart.html',result=dicti)
+	return render_template('cart.html',open_cart=dicti, main=userId, invalid=invalid, quantity =len(dicti),price = '₹ '+str(price))
 
 @app.route('/add_tomato', methods=['GET','POST'])
 def add_tomato():
+	userId = request.args.get('id')
+	print(userId)
+	print('XXXXXXXXXXXXXXXXXXX')
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
-	#userId = request.form['object_id']
-	#userId = document.getElementById('object_id');
-	#print('YYYYYYYYY')
-	#print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -266,12 +296,13 @@ def add_tomato():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
-@app.route('/add_carrot', methods=['POST'])
+@app.route('/add_carrot', methods=['GET','POST'])
 def add_carrot():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -291,12 +322,13 @@ def add_carrot():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
-@app.route('/add_potato', methods=['POST'])
+@app.route('/add_potato', methods=['GET','POST'])
 def add_potato():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -316,12 +348,13 @@ def add_potato():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
-@app.route('/add_cucumber', methods=['POST'])
+@app.route('/add_cucumber', methods=['GET','POST'])
 def add_cucumber():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -334,6 +367,7 @@ def add_cucumber():
 			db.cart.update_one(myquery, newvalues)
 			counter = 1
 			break
+	print(orders)
 	if(counter==0) :
 		orders = {"cucumber":1}
 		entry = {
@@ -341,12 +375,13 @@ def add_cucumber():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
-@app.route('/add_broccoli', methods=['POST'])
+@app.route('/add_broccoli', methods=['GET','POST'])
 def add_broccoli():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -366,12 +401,13 @@ def add_broccoli():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 	
-@app.route('/add_peas', methods=['POST'])
+@app.route('/add_peas', methods=['GET','POST'])
 def add_peas():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -391,12 +427,13 @@ def add_peas():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
-@app.route('/add_cabbage', methods=['POST'])
+@app.route('/add_cabbage', methods=['GET','POST'])
 def add_cabbage():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
@@ -416,12 +453,13 @@ def add_cabbage():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
-@app.route('/add_onion', methods=['POST'])
+@app.route('/add_onion', methods=['GET','POST'])
 def add_onion():
 	counter=0
-	userId = '5cacb24a5f627d34c743feb7'
+	userId = request.args.get('id')
+	print(userId)
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			print(x['Order'])
@@ -442,9 +480,283 @@ def add_onion():
 		'Order' : orders,
 		}
 		db.cart.insert_one(entry)
-	return render_template('main_page.html')
+	return redirect('main_page.html?id='+userId)
 
 @app.route('/blog.html', methods=['GET','POST'])
-def blogup():
-	return render_template('blog.html')
+def blog():
+	userId = request.args.get('id')
+	print(userId)
+	return render_template('blog.html',main=userId)
 
+@app.route('/previous_order', methods=['GET','POST'])
+def previous_order():
+	userId = request.args.get('id')
+	print(userId)
+	order_history = {}
+	counter = 0
+	for x in Order.order.find({},{"_id": 1, "UserId": 1, "Date":1, "Time":1, "Order":1 }):
+		if((x['UserId'])=='userName') :
+			temp_history = {}
+			temp_history['Invoice'] = x['_id']
+			temp_history['Date'] = x['Date']
+			temp_history['Time'] = x['Time']
+			temp_order = x['Order']
+			for key,value in temp_order.items():
+				if key=='tomato' :
+					value.append(tomato_pic)
+					value.append(value[0]*value[1])
+				elif key=='carrot' :
+					value.append(carrot_pic)
+					value.append(value[0]*value[1])
+				elif key=='potato' :
+					valuearr.append(potato_pic)
+					value.append(value[0]*value[1])
+				elif key=='cucumber' :
+					value.append(cucumber_pic)
+					value.append(value[0]*value[1])
+				elif key=='broccoli' :
+					value.append(broccoli_pic)
+					value.append(value[0]*value[1])
+				elif key=='peas' :
+					value.append(peas_pic)
+					value.append(value[0]*value[1])
+				elif key=='cabbage' :
+					value.append(cabbage_pic)
+					value.append(value[0]*value[1])
+				elif key=='onion' :
+					value.append(onion_pic)
+					value.append(value[0]*value[1])
+			temp_history['Order'] = temp_order
+			order_history[counter] = temp_history
+			counter+=1
+
+	print(order_history)
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			print(orders)
+			break
+	price=0
+	for key,value in orders.items():
+		if key=='tomato' :
+			price += (value*39.90)
+		elif key=='carrot' :
+			price += (value*19.50)
+		elif key=='potato' :
+			price += (value*32.20)
+		elif key=='cucumber' :
+			price += (value*59.90)
+		elif key=='broccoli' :
+			price += (value*79.90)
+		elif key=='peas' :
+			price += (value*59.90)
+		elif key=='cabbage' :
+			price += (value*15.90)
+		elif key=='onion' :
+			price += (value*43.99)
+
+	return render_template('orders.html',previous_order=order_history,main=userId, quantity =len(orders),price = '₹ '+str(price))
+
+@app.route('/pending_order', methods=['GET','POST'])
+def pending_order():
+	userId = request.args.get('id')
+	print(userId)
+	invalid = {"Your have no Pending order":1}
+	dicti = {}
+	counter = 0
+	for x in Order.pending.find({},{"_id": 1, "User_Id": 1, "Status":1, "Delivery":1, "Price":1, "Time":1, "Order":1}):
+		if((x['User_Id'])==userId and x['Status']!='Order Cancel') :
+			dicti[counter] = x
+			counter+=1
+			invalid = {}
+	print(dicti)
+	print("yyyyyyyyyyyyyy")
+
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			print(orders)
+			break
+	price=0
+	for key,value in orders.items():
+		if key=='tomato' :
+			price += (value*39.90)
+		elif key=='carrot' :
+			price += (value*19.50)
+		elif key=='potato' :
+			price += (value*32.20)
+		elif key=='cucumber' :
+			price += (value*59.90)
+		elif key=='broccoli' :
+			price += (value*79.90)
+		elif key=='peas' :
+			price += (value*59.90)
+		elif key=='cabbage' :
+			price += (value*15.90)
+		elif key=='onion' :
+			price += (value*43.99)
+
+	return render_template('pending_order.html',pending_order=dicti,main=userId,invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
+
+@app.route('/checkout', methods=['GET','POST'])
+def checkout():
+	userId = request.args.get('id')
+	print(userId)
+
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			print(orders)
+			break
+	price=0
+	for key,value in orders.items():
+		if key=='tomato' :
+			price += (value*39.90)
+		elif key=='carrot' :
+			price += (value*19.50)
+		elif key=='potato' :
+			price += (value*32.20)
+		elif key=='cucumber' :
+			price += (value*59.90)
+		elif key=='broccoli' :
+			price += (value*79.90)
+		elif key=='peas' :
+			price += (value*59.90)
+		elif key=='cabbage' :
+			price += (value*15.90)
+		elif key=='onion' :
+			price += (value*43.99)
+
+	if price>150 :
+		shipping = 'Free'
+		total = price
+	else:
+		shipping = '₹ '+str(50)
+		total = price+50
+
+	return render_template('checkout.html',main=userId,order=['₹ '+str(price),shipping,'₹ '+str(total)])
+
+@app.route('/place_order', methods=['GET','POST'])
+def place_order():
+	import datetime
+
+	userId = request.args.get('id')
+	print(userId)
+	dicti={}
+	
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			print(orders)
+			break
+	price=0
+	for key,value in orders.items():
+		arr = [] #pic,price,quantity
+		if key=='tomato' :
+			arr.append(tomato_pic)
+			arr.append(39.90)
+			price += (value*39.90)
+		elif key=='carrot' :
+			arr.append(carrot_pic)
+			arr.append(19.50)
+			price += (value*19.50)
+		elif key=='potato' :
+			arr.append(potato_pic)
+			arr.append(32.20)
+			price += (value*32.20)
+		elif key=='cucumber' :
+			arr.append(cucumber_pic)
+			arr.append(59.90)
+			price += (value*59.90)
+		elif key=='broccoli' :
+			arr.append(broccoli_pic)
+			arr.append(79.90)
+			price += (value*79.90)
+		elif key=='peas' :
+			arr.append(peas_pic)
+			arr.append(59.90)
+			price += (value*59.90)
+		elif key=='cabbage' :
+			arr.append(cabbage_pic)
+			arr.append(15.90)
+			price += (value*15.90)
+		elif key=='onion' :
+			arr.append(onion_pic)
+			arr.append(43.99)
+			price += (value*43.99)
+		arr.append(value)
+		arr.append(arr[-2]*arr[-1])
+		dicti[key] = arr
+
+	status = 'Order Pending'
+	delivery = 'NA'
+	d = datetime.datetime.now()
+
+	entry = { 	'User_Id' : userId,
+				'Status' : status,
+				'Delivery' : delivery,
+				'Price' : price,
+				'Time' : d,
+				'Order' : dicti
+	}
+
+	Order.pending.insert_one(entry)
+
+	orders = {}
+	myquery = { "Customer_Id": userId }
+	newvalues = { "$set" : {"Order": orders }}
+	db.cart.update_one(myquery, newvalues)
+
+	return render_template('main_page.html',main=userId)
+
+@app.route('/cancel_order', methods=['GET','POST'])
+def cancel_order():
+	print("SSSSSSSSSSSS")
+	userId = request.args.get('id')
+	print(userId)
+	orderId = request.args.get('order_id')
+	print(orderId)
+	#a = Order.pending.delete_many({'_id': orderId})
+	#print(a)
+
+	myquery = { "_id": ObjectId(orderId)}
+	newvalues = { "$set" : {"Status": 'Order Cancel' }}
+	a = Order.pending.update_one(myquery, newvalues)
+	print(a)
+	invalid = {"Your have no Pending order":1}
+	dicti = {}
+	counter = 0
+	for x in Order.pending.find({},{"_id": 1, "User_Id": 1, "Status":1, "Delivery":1, "Price":1, "Time":1, "Order":1}):
+		if((x['User_Id'])==userId and x['Status']!='Order Cancel') :
+			dicti[counter] = x
+			counter+=1
+			invalid = {}
+	#print(dicti)
+	#print("yyyyyyyyyyyyyy")
+
+
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			print(orders)
+			break
+	price=0
+	for key,value in orders.items():
+		if key=='tomato' :
+			price += (value*39.90)
+		elif key=='carrot' :
+			price += (value*19.50)
+		elif key=='potato' :
+			price += (value*32.20)
+		elif key=='cucumber' :
+			price += (value*59.90)
+		elif key=='broccoli' :
+			price += (value*79.90)
+		elif key=='peas' :
+			price += (value*59.90)
+		elif key=='cabbage' :
+			price += (value*15.90)
+		elif key=='onion' :
+			price += (value*43.99)
+
+	return render_template('pending_order.html',pending_order=dicti,main=userId,invalid=invalid, quantity =len(orders),price = '₹ '+str(price))

@@ -23,13 +23,19 @@
 </head>
 <body>
 	
+
 	<div class="limiter">
+		{% for key, value in out.items() %}
+				<div><b><center>{{key}}</center></b></div>
+				{% endfor %}
 		<div class="container-login100">
+
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="static/images/img-01.png" alt="IMG">
 				</div>
 
+				
 				<form action="{{ url_for('object_id') }}" method="post" class="login100-form validate-form" id="form1" >
 					<span class="login100-form-title">
 						Member Login
@@ -60,7 +66,7 @@
 							Forgot
 						</span>
 						<a class="txt2" href="./forgotPassword.html">
-							PasswAord?
+							Password?
 						</a>
 					</div>
 

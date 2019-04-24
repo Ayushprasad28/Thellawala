@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="/static/styles/css/main_styles.css">
 <link rel="stylesheet" type="text/css" href="/static/styles/css/responsive.css">
 </head>
+
 <body>
 
 
@@ -35,11 +36,15 @@
 			<!-- Navigation -->
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
-					<li><a href="main_page.html">home</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
 					<li><a href="#">fruits</a></li>
 					<li><a href="#">vegetables</a></li>
-					<li><a href="#">my orders</a></li>
+					<li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
+					<li><a href="{{ url_for('blog',id=main)}}">blog</a></li>
 					<li><a href="#">contact</a></li>
+					<li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
+					
 				</ul>
 			</nav>
 
@@ -49,9 +54,9 @@
 
 				<!-- Cart -->
 				<div class="cart d-flex flex-row align-items-center justify-content-start">
-					<div class="cart_icon"><a href="cart.html">
-						<img src="static/images/bag.png" alt="">
-						<div class="cart_num">2</div>
+					<div class="cart_icon" action="{{ url_for('open_cart')}}" method="get" >
+						<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
+						<div class="cart_num">{{quantity}}</div>
 					</a></div>
 				</div>
 
@@ -77,11 +82,14 @@
 		</div>
 		<nav class="menu_nav">
 			<ul class="menu_mm">
-				<li class="menu_mm"><a href="index.html">home</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
 				<li class="menu_mm"><a href="#">fruits</a></li>
 				<li class="menu_mm"><a href="#">vegetbles</a></li>
-				<li class="menu_mm"><a href="#">my orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
 				<li class="menu_mm"><a href="contact.html">contact</a></li>
+				<li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
+				
 			</ul>
 		</nav>
 		<div class="menu_extra">
@@ -115,11 +123,14 @@
 		<!-- Sidebar Navigation -->
 		<nav class="sidebar_nav">
 			<ul>
-				<li><a href="index.html">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				
 			</ul>
 		</nav>
 
@@ -133,12 +144,12 @@
 
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
-			<div class="cart_icon"><a href="cart.html">
-				<img src="/static/images/bag.png" alt="">
-				<div class="cart_num">2</div>
+			<div class="cart_icon"><a href="{{ url_for('open_cart',id=main)}}" method="get">
+				<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
+				<div class="cart_num">{{quantity}}</div>
 			</a></div>
 			<div class="cart_text">bag</div>
-			<div class="cart_price">₹39.99 (1)</div>
+			<div class="cart_price">{{price}}</div>
 		</div>
 	</div>
 
@@ -270,8 +281,7 @@
 						<div class="products_container grid">
 
 							<!-- Product -->
-							<form action="{{ url_for('add_tomato') }}" method="post" class="login100-form validate-form" id="form1" >
-								
+
 								<div class="product grid-item hot">
 									<div class="product_inner">
 										<div class="product_image">
@@ -279,30 +289,28 @@
 											<div class="product_tag">hot</div>
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Tomatoes</a></div>
+											<div class="product_title">Tomato</a></div>
 											<div class="product_price">Rs.39.90</div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_tomato',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
+							
 
-							<!-- Product -->
-							<form action="{{ url_for('add_carrot') }}" method="post" class="login100-form validate-form" id="form1" >
+							
 								<div class="product grid-item">
 									<div class="product_inner">
 										<div class="product_image"><img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg" height="200" alt=""></div>
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Carrots</a></div>
 											<div class="product_price">Rs.19.50</div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_carrot',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
-
+							
 							<!-- Product -->
-							<form action="{{ url_for('add_potato') }}" method="post" class="login100-form validate-form" id="form1" >
+							
 								<div class="product grid-item sale">
 									<div class="product_inner">
 										<div class="product_image">
@@ -312,14 +320,11 @@
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Potatoes</a></div>
 											<div class="product_price">Rs.32.20<span>RRP 64.40</span></div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_potato',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
-
-							<!-- Product -->
-							<form action="{{ url_for('add_cucumber') }}" method="post" class="login100-form validate-form" id="form1" >
+							
 								<div class="product grid-item">
 									<div class="product_inner">
 										<div class="product_image">
@@ -328,14 +333,11 @@
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Cucumber</a></div>
 											<div class="product_price">Rs.58.90</div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_cucumber',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
-
-							<!-- Product -->
-							<form action="{{ url_for('add_broccoli') }}" method="post" class="login100-form validate-form" id="form1" >
+							
 								<div class="product grid-item">
 									<div class="product_inner">
 										<div class="product_image">
@@ -344,14 +346,11 @@
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Broccoli</a></div>
 											<div class="product_price">Rs.79.90</div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_broccoli',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
 
-							<!-- Product -->
-							<form action="{{ url_for('add_peas') }}" method="post" class="login100-form validate-form" id="form1" >
 								<div class="product grid-item new">
 									<div class="product_inner">
 										<div class="product_image">
@@ -361,14 +360,11 @@
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Peas</a></div>
 											<div class="product_price">Rs.59.90</div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_peas',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
-
-							<!-- Product -->
-							<form action="{{ url_for('add_cabbage') }}" method="post" class="login100-form validate-form" id="form1" >
+							
 								<div class="product grid-item">
 									<div class="product_inner">
 										<div class="product_image">
@@ -377,14 +373,11 @@
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Cabbage</a></div>
 											<div class="product_price">Rs.15.90</div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_cabbage',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
-
-							<!-- Product -->
-							<form action="{{ url_for('add_onion') }}" method="post" class="login100-form validate-form" id="form1" >
+							
 								<div class="product grid-item sale">
 									<div class="product_inner">
 										<div class="product_image">
@@ -394,11 +387,11 @@
 										<div class="product_content text-center">
 											<div class="product_title"><a href="product.html">Onions</a></div>
 											<div class="product_price">Rs.43.99<span>RRP 64.40</span></div>
-											<div class="product_button ml-auto mr-auto trans_200"><input type=submit>add to cart</a></div>
+											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_onion',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
 								</div>
-							</form>
+							
 
 						</div>
 					</div>
