@@ -34,13 +34,15 @@
 			<!-- Navigation -->
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
-					<li><a href="index.html">home</a></li>
-					<li><a href="#">Vegetables</a></li>
-					<li><a href="#">Fruits</a></li>
-					<li><a href="{{ url_for('previous_order',id=main)}}" method="get">My Orders</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
+					<li><a href="#">fruits</a></li>
+					<li><a href="#">vegetables</a></li>
+					<li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-					<li><a href="#">blog</a></li>
+					<li><a href="{{ url_for('blog',id=main)}}">blog</a></li>
 					<li><a href="#">contact</a></li>
+					<li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
+					
 				</ul>
 			</nav>
 
@@ -84,11 +86,12 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
-				<li class="menu_mm"><a href="#">vegetables</a></li>
 				<li class="menu_mm"><a href="#">fruits</a></li>
-				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders</a></li>
-				<li class="menu_mm"><a href="./blog.html">blog</a></li>
-				<li class="menu_mm"><a href="./contact.html">contact</a></li>
+				<li class="menu_mm"><a href="#">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
+				<li class="menu_mm"><a href="contact.html">contact</a></li>
+				<li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 			</ul>
 		</nav>
 		<div class="menu_extra">
@@ -122,11 +125,12 @@
 		<nav class="sidebar_nav">
 			<ul>
 				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my Orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="blog.html">blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 			</ul>
 		</nav>
 
@@ -165,6 +169,19 @@
 			</div>
 		</div>
 	</div>
+
+	{% for key, value in invalid.items() %}
+	<div class="home">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="home_content">
+				<div class="home_title">{{key}}</div>
+				<div class="breadcrumbs">
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
 
 	<!-- Cart -->
 
@@ -218,11 +235,11 @@
 									
 									<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
-											<div><div class="product_image"><img src={{ values[2] }}></div></div>
+											<div><div class="product_image"><img src={{ values[0] }}></div></div>
 											<div class="product_name">{{ keys }}</div>
 										</div>
 										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ values[1] }}</div>
-										<div class="product_price text-lg-center product_text"><span>Quantity: </span>{{ values[0] }}</div>
+										<div class="product_price text-lg-center product_text"><span>Quantity: </span>{{ values[2] }}</div>
 										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ values[3] }}</div>
 									</li>
 								
@@ -249,29 +266,6 @@
 		</div>
 
 		
-	<!-- Newsletter -->
-
-	<div class="newsletter">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/newsletter.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="newsletter_content text-center">
-						<div class="newsletter_title_container">
-							<div class="newsletter_title">subscribe to our newsletter</div>
-							<div class="newsletter_subtitle">we won't spam, we promise!</div>
-						</div>
-						<div class="newsletter_form_container">
-							<form action="#" id="newsletter_form" class="newsletter_form">
-								<input type="email" class="newsletter_input" placeholder="your e-mail here" required="required">
-								<button class="newsletter_button">submit</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Footer -->
 

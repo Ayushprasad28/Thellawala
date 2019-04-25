@@ -56,29 +56,32 @@ def main():
 	userId = request.args.get('id')
 	print(userId)
 	print("index returned")
+	orders ={}
+	price=0
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
 			print(orders)
 			break
-	price=0
-	for key,value in orders.items():
-		if key=='tomato' :
-			price += (value*39.90)
-		elif key=='carrot' :
-			price += (value*19.50)
-		elif key=='potato' :
-			price += (value*32.20)
-		elif key=='cucumber' :
-			price += (value*59.90)
-		elif key=='broccoli' :
-			price += (value*79.90)
-		elif key=='peas' :
-			price += (value*59.90)
-		elif key=='cabbage' :
-			price += (value*15.90)
-		elif key=='onion' :
-			price += (value*43.99)
+
+	if(len(orders)>0) :
+		for key,value in orders.items():
+			if key=='tomato' :
+				price += (value*39.90)
+			elif key=='carrot' :
+				price += (value*19.50)
+			elif key=='potato' :
+				price += (value*32.20)
+			elif key=='cucumber' :
+				price += (value*59.90)
+			elif key=='broccoli' :
+				price += (value*79.90)
+			elif key=='peas' :
+				price += (value*59.90)
+			elif key=='cabbage' :
+				price += (value*15.90)
+			elif key=='onion' :
+				price += (value*43.99)
 	return render_template('main_page.html',main=userId, quantity =len(orders),price = '₹ '+str(price))
 
 @app.route('/object_id', methods=['GET','POST'])
@@ -144,7 +147,7 @@ def handle_signup():
 
 		if counter==0 :
 			result=db.info.insert_one(entry)
-			for x in db.info.find({},{"_id": 0, "email": 1}):
+			for x in db.info.find({},{"_id": 1, "email": 1}):
 				if(x['email']==userEmail):
 					result = x['_id']
 					break
@@ -492,70 +495,43 @@ def blog():
 def previous_order():
 	userId = request.args.get('id')
 	print(userId)
+	invalid = {"Your have no Previous Orders":1}
 	order_history = {}
 	counter = 0
-	for x in Order.order.find({},{"_id": 1, "UserId": 1, "Date":1, "Time":1, "Order":1 }):
-		if((x['UserId'])=='userName') :
-			temp_history = {}
-			temp_history['Invoice'] = x['_id']
-			temp_history['Date'] = x['Date']
-			temp_history['Time'] = x['Time']
-			temp_order = x['Order']
-			for key,value in temp_order.items():
-				if key=='tomato' :
-					value.append(tomato_pic)
-					value.append(value[0]*value[1])
-				elif key=='carrot' :
-					value.append(carrot_pic)
-					value.append(value[0]*value[1])
-				elif key=='potato' :
-					valuearr.append(potato_pic)
-					value.append(value[0]*value[1])
-				elif key=='cucumber' :
-					value.append(cucumber_pic)
-					value.append(value[0]*value[1])
-				elif key=='broccoli' :
-					value.append(broccoli_pic)
-					value.append(value[0]*value[1])
-				elif key=='peas' :
-					value.append(peas_pic)
-					value.append(value[0]*value[1])
-				elif key=='cabbage' :
-					value.append(cabbage_pic)
-					value.append(value[0]*value[1])
-				elif key=='onion' :
-					value.append(onion_pic)
-					value.append(value[0]*value[1])
-			temp_history['Order'] = temp_order
-			order_history[counter] = temp_history
+	for x in Order.order.find({},{"_id": 1, "UserId": 1, "Invoice":1, "Date":1, "Time":1, "Price":1, "Order":1 }):
+		if((x['UserId'])==userId) :
+			order_history[counter] = x
 			counter+=1
+			invalid = {}
 
 	print(order_history)
+	orders={}
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
 			print(orders)
 			break
 	price=0
-	for key,value in orders.items():
-		if key=='tomato' :
-			price += (value*39.90)
-		elif key=='carrot' :
-			price += (value*19.50)
-		elif key=='potato' :
-			price += (value*32.20)
-		elif key=='cucumber' :
-			price += (value*59.90)
-		elif key=='broccoli' :
-			price += (value*79.90)
-		elif key=='peas' :
-			price += (value*59.90)
-		elif key=='cabbage' :
-			price += (value*15.90)
-		elif key=='onion' :
-			price += (value*43.99)
+	if(len(orders)>0) :
+		for key,value in orders.items():
+			if key=='tomato' :
+				price += (value*39.90)
+			elif key=='carrot' :
+				price += (value*19.50)
+			elif key=='potato' :
+				price += (value*32.20)
+			elif key=='cucumber' :
+				price += (value*59.90)
+			elif key=='broccoli' :
+				price += (value*79.90)
+			elif key=='peas' :
+				price += (value*59.90)
+			elif key=='cabbage' :
+				price += (value*15.90)
+			elif key=='onion' :
+				price += (value*43.99)
 
-	return render_template('orders.html',previous_order=order_history,main=userId, quantity =len(orders),price = '₹ '+str(price))
+	return render_template('orders.html',previous_order=order_history,main=userId, invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
 
 @app.route('/pending_order', methods=['GET','POST'])
 def pending_order():
@@ -565,36 +541,39 @@ def pending_order():
 	dicti = {}
 	counter = 0
 	for x in Order.pending.find({},{"_id": 1, "User_Id": 1, "Status":1, "Delivery":1, "Price":1, "Time":1, "Order":1}):
-		if((x['User_Id'])==userId and x['Status']!='Order Cancel') :
+		if((x['User_Id'])==userId and x['Status']!='Order Cancel' and x['Status']!='Order Delivered') :
 			dicti[counter] = x
 			counter+=1
 			invalid = {}
 	print(dicti)
 	print("yyyyyyyyyyyyyy")
 
+	orders = {}
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
 			print(orders)
 			break
 	price=0
-	for key,value in orders.items():
-		if key=='tomato' :
-			price += (value*39.90)
-		elif key=='carrot' :
-			price += (value*19.50)
-		elif key=='potato' :
-			price += (value*32.20)
-		elif key=='cucumber' :
-			price += (value*59.90)
-		elif key=='broccoli' :
-			price += (value*79.90)
-		elif key=='peas' :
-			price += (value*59.90)
-		elif key=='cabbage' :
-			price += (value*15.90)
-		elif key=='onion' :
-			price += (value*43.99)
+
+	if(len(orders)>0):
+		for key,value in orders.items():
+			if key=='tomato' :
+				price += (value*39.90)
+			elif key=='carrot' :
+				price += (value*19.50)
+			elif key=='potato' :
+				price += (value*32.20)
+			elif key=='cucumber' :
+				price += (value*59.90)
+			elif key=='broccoli' :
+				price += (value*79.90)
+			elif key=='peas' :
+				price += (value*59.90)
+			elif key=='cabbage' :
+				price += (value*15.90)
+			elif key=='onion' :
+				price += (value*43.99)
 
 	return render_template('pending_order.html',pending_order=dicti,main=userId,invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
 
@@ -760,3 +739,68 @@ def cancel_order():
 			price += (value*43.99)
 
 	return render_template('pending_order.html',pending_order=dicti,main=userId,invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
+
+
+@app.route('/authenticate.html', methods=['GET','POST'])
+def authenticate():
+	import random
+	digits = "0123456789"
+	OTP = "" 
+	print("wwwwwwwww")
+	userid = request.args.get('id')
+	orderid =request.args.get('order_id')
+  
+	for i in range(4) : 
+		OTP += digits[math.floor(random.random() * 10)] 
+	print(OTP)
+	encoded_OTP = hashlib.sha512(OTP.encode()).hexdigest()
+	return render_template('authenticate.html',otp=encoded_OTP,main=userid,order=orderid)
+
+
+@app.route('/enter_OTP', methods=['GET','POST'])
+def enter_OTP():
+	import datetime
+
+	print("SSSSSSSSSSSS")
+	userOTP = request.args.get('user_OTP')
+	OTP=request.args.get('or_otp')
+	userId = request.args.get('id')
+	orderId =request.args.get('order_id')
+	print(userOTP)
+	print(OTP)
+	encoded_userOTP = hashlib.sha512(userOTP.encode()).hexdigest()
+	print(userId)
+	print(orderId)
+	if(OTP==encoded_userOTP) :
+		print("YAYYYYYYYYYY")
+
+		for x in Order.pending.find({},{"_id": 1, "User_Id": 1, "Status":1, "Delivery":1, "Price":1, "Time":1, "Order":1}):
+			if(x['_id']==ObjectId(orderId)) :
+				order = x["Order"]
+				price = x["Price"]
+				break
+
+		d = datetime.datetime.now()
+
+		entry = {
+			'UserId' : userId,
+			'Invoice' : orderId,
+			'Date' : d.strftime("%x"),
+			'Time' : d.strftime("%X"),
+			'Price' : price,
+			'Order' : order
+		}
+
+		entry = Order.order.insert_one(entry)
+
+		myquery = { "_id": ObjectId(orderId)}
+		newvalues = { "$set" : {"Status": 'Order Delivered' }}
+		a = Order.pending.update_one(myquery, newvalues)
+		return redirect('previous_order?id='+userId)
+
+	else :
+		print("SHITTTTTTTTTT")
+
+	return redirect('main_page.html?id='+userId)
+
+
