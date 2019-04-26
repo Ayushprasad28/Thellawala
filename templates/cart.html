@@ -13,6 +13,46 @@
 <link rel="stylesheet" type="text/css" href="../static/plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="../static/styles/css/cart.css">
 <link rel="stylesheet" type="text/css" href="../static/styles/css/cart_responsive.css">
+<style>
+.dropbtn {
+  background-color: #ECF4F6;
+  color: black;
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 100px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
 </head>
 <body>
 
@@ -207,19 +247,27 @@
 										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 											<div><div class="product_image"><img src={{ value[0] }}></div></div>
 											<div class="product_name"><a href="product.html">{{ key }}</a></div>
+											<div type="hidden" name="demo" placeholder="demo" value=key>
 										</div>
 										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ value[1] }}</div>
+										
 										<div class="product_quantity_container">
 											<div class="product_quantity ml-lg-auto mr-lg-auto text-center">
-												<span class="product_text product_num">{{ value[2] }}</span>
-												<div class="qty_sub qty_button trans_200 text-center"><span>-</span></div>
-												<div class="qty_add qty_button trans_200 text-center"><span>+</span></div>
+												<div class="dropdown">
+										  <div onclick="myFunction()" class="dropbtn"><span>Quantity: </span>{{ value[2] }}</div>
+										  <div id="myDropdown" class="dropdown-content">
+										    <a href="{{ url_for('change',id=main,product=key,value=1)}}">1</a>
+										    <a href="{{ url_for('change',id=main,product=key,value=2)}}">2</a>
+										    <a href="{{ url_for('change',id=main,product=key,value=3)}}">3</a>
+										    <a href="{{ url_for('change',id=main,product=key,value=4)}}">4</a>
+										    <a href="{{ url_for('change',id=main,product=value[0],value=5)}}">5</a>
+										  </div>
+										</div>
 											</div>
 										</div>
 										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ value[3] }}</div>
 									</li>
 									
-								 
 								</ul>
 							</div>
 							{% endfor %}
@@ -230,7 +278,7 @@
 								<div class="cart_buttons_inner ml-auto d-flex flex-row align-items-start justify-content-start flex-wrap">
 									<div class="button button_continue trans_200"><a href="{{ url_for('main',id=main)}}" method="get">continuing shopping</a></div>
 
-									{% for key, value in open_cart.items() %}
+									{% for key, value in button_cart.items() %}
 									<div class="button button_clear trans_200"><a href="{{ url_for('clear_cart',id=main)}}" method="get">clear cart</a></div>
 									<div class="button button_update trans_200"><a href="{{ url_for('checkout',id=main)}}">Checkout</a></div>
 									{% endfor %}
@@ -423,6 +471,29 @@
 	</footer>
 
 </div>
+
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
 
 <script src="../static/js/jquery-3.2.1.min.js"></script>
 <script src="../static/styles/css/bootstrap-4.1.3/popper.js"></script>

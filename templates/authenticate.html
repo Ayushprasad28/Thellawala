@@ -175,11 +175,11 @@
 					<div class="newsletter_content text-center">
 						<div class="newsletter_form_container">
 							<form action="{{ url_for('enter_OTP') }}" id="newsletter_form" class="newsletter_form">
-								<input type="text" pattern="[0-9]*" name="user_OTP" placeholder="user_OTP" required="required">
+								<input type="text" pattern="[0-9]*" id="otp_input" name="user_OTP" placeholder="user_OTP" required="required">
 								<input type="hidden" name="or_otp" placeholder="or_otp" value={{otp}}>
 								<input type="hidden" name="id" placeholder="id" value={{main}}>
 								<input type="hidden" name="order_id" placeholder="order_id" value={{order}}>
-								<button class="newsletter_button">Submit</button>
+								<button class="newsletter_button" id="submit" >Submit</button>
 							</form>
 						</div>
 					</div>
@@ -192,6 +192,8 @@
 </div>
 
 <script>
+
+var hidden = false;
 // Set the date we're counting down to
 var sd = new Date();
 var sm = (sd.getUTCMinutes()+2)*60;
@@ -214,9 +216,11 @@ var x = setInterval(function() {
   document.getElementById("demo").innerHTML = "Time to expire the session : "+distance+"s"
   // If the count down is over, write some text 
   if (distance < 0) {
+  	hidden = true;
     clearInterval(x);
     document.getElementById("demo").innerHTML = "EXPIRED";
-
+    document.getElementById("submit").style.visibility = 'hidden';
+    document.getElementById("otp_input").style.visibility = 'hidden';
   }
 }, 1000);
 </script>

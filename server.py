@@ -11,12 +11,13 @@ import json
 import hashlib
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from twilio.rest import Client
 
 
 app = Flask(__name__)
-client = MongoClient(port=27017)
-db=client.user
-Order=client.order
+mongo = MongoClient(port=27017)
+db=mongo.user
+Order=mongo.order
 
 
 tomato_pic = "https://choosemyplate-prod.azureedge.net/sites/default/files/styles/food_gallery_colorbox__800x500_/public/myplate/Tomatoes.jpeg?itok=LEvJrg7y"
@@ -27,6 +28,10 @@ broccoli_pic = "https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250_
 peas_pic = "https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dw52d854a2/images/products/vegetables/03874_01_cosmos.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196"
 cabbage_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg"
 onion_pic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr"
+
+
+gmail_user = 'thella.wala@gmail.com'  
+gmail_password = 'Rahul@idea' 	
 
 
 @app.route("/")
@@ -174,8 +179,6 @@ def forgot_password():
 		import random
 		import string
 
-		gmail_user = 'thella.wala@gmail.com'  
-		gmail_password = 'Rahul@idea'
 		gmail_reciever = x['email']
 		user_name = x['name']
 		temp_pass = ''
@@ -214,7 +217,8 @@ def clear_cart():
 	myquery = { "Customer_Id": userId }
 	newvalues = { "$set" : {"Order": orders }}
 	db.cart.update_one(myquery, newvalues)
-	return render_template('cart.html',invalid=invalid, open_cart=orders, main=userId)
+	return redirect('open_cart?id='+str(userId))
+	#render_template('cart.html',invalid=invalid, button_open_cart=orders, main=userId)
 
 
 @app.route('/open_cart', methods=['GET','POST'])
@@ -223,12 +227,15 @@ def open_cart():
 	print(userId)
 	dicti={}
 	
+	orders={}
+	
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
 		if((x['Customer_Id'])==userId) :
 			orders = x['Order']
 			print(orders)
 			break
 	price=0
+
 	for key,value in orders.items():
 		arr = [] #pic,price,quantity
 		if key=='tomato' :
@@ -267,12 +274,16 @@ def open_cart():
 		arr.append(arr[-2]*arr[-1])
 		dicti[key] = arr
 	print(dicti)
+	b_cart={}
+	
 	if(len(dicti)==0) :
 		invalid ={"Your Cart is Empty":1}
+		b_cart = {}
 	else:
 		invalid = {}
+		b_cart = {"Button":1}
 	#dicti = {'carrot':[50,18.00],'tomato':[30,14.00]}
-	return render_template('cart.html',open_cart=dicti, main=userId, invalid=invalid, quantity =len(dicti),price = '₹ '+str(price))
+	return render_template('cart.html',open_cart=dicti, main=userId, button_cart =b_cart, invalid=invalid, quantity =len(dicti),price = '₹ '+str(price))
 
 @app.route('/add_tomato', methods=['GET','POST'])
 def add_tomato():
@@ -749,11 +760,33 @@ def authenticate():
 	print("wwwwwwwww")
 	userid = request.args.get('id')
 	orderid =request.args.get('order_id')
+
+	for x in Order.pending.find({},{"_id": 1, "Price":1}):
+		if(x['_id']==ObjectId(orderid)) :
+			price = x['Price']
   
 	for i in range(4) : 
 		OTP += digits[math.floor(random.random() * 10)] 
+	OTP = str(OTP)
 	print(OTP)
 	encoded_OTP = hashlib.sha512(OTP.encode()).hexdigest()
+
+	account_sid = 'ACe23d56343cab6c39c5a3b3a285361150'
+	auth_token = 'dd9e600c8e0c6e878b8d049672681926'
+	client = Client(account_sid, auth_token)
+
+	
+	mess = 'Total amount to be paid is Rs. '+str(price)+". After receiving the payment, please share the OTP for completion of your delivery. OTP : "+str(OTP)
+	print(mess)
+
+	message = client.messages.create(
+                              from_='+17278975821',
+                              body=mess,
+                              to='+919910058241'
+                          )
+
+	print(message.sid)
+
 	return render_template('authenticate.html',otp=encoded_OTP,main=userid,order=orderid)
 
 
@@ -796,11 +829,48 @@ def enter_OTP():
 		myquery = { "_id": ObjectId(orderId)}
 		newvalues = { "$set" : {"Status": 'Order Delivered' }}
 		a = Order.pending.update_one(myquery, newvalues)
+
+		for x in db.info.find({},{"_id":1, "email":1, "name" :1}) :
+			if(x['_id']==userId) :
+				user_mail = x['email']
+				user_name = x['name']
+
+		SUBJECT = 'Invoice No: '+orderId+' Delivered'
+		TEXT = 'Dear '+user_name+',\n\nYour Order of Invoice No. '+orderId+' is delivered.\nThank you for shopping with us.\n\nRegards-\nTeam Thella wala.'
+		message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT)
+
+		mail = smtplib.SMTP('smtp.gmail.com',587)
+		mail.ehlo()
+		mail.starttls()
+		mail.login(gmail_user, gmail_password)
+		mail.sendmail(gmail_user,user_mail, message)
+
 		return redirect('previous_order?id='+userId)
 
 	else :
 		print("SHITTTTTTTTTT")
 
 	return redirect('main_page.html?id='+userId)
+
+
+@app.route('/change', methods = ['GET','POST'])
+def change():
+	print("asdasd")
+	userId = request.args.get('id')
+	product = request.args.get('product')
+	value = request.args.get('value')
+	print(userId)
+	print(product)
+	print(value)
+	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
+		if((x['Customer_Id'])==userId) :
+			orders = x['Order']
+			orders[product] = int(value)
+			myquery = { "Customer_Id": userId }
+			newvalues = { "$set" : {"Order": orders }}
+			db.cart.update_one(myquery, newvalues)
+			break
+
+	return redirect('open_cart?id='+userId)
 
 
