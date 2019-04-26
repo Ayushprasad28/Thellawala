@@ -171,8 +171,8 @@
 										<div>
 											<!-- Address -->
 											<label for="checkout_address">Address*</label>
-											<input type="text" id="checkout_address" class="checkout_input" required="required">
-											<input type="text" id="checkout_address_2" class="checkout_input checkout_address_2" required="required">
+											<input type="text" id="address" class="checkout_input" required="required">
+											
 										</div>
 										<div>
 											<!-- Zipcode -->
@@ -250,8 +250,9 @@
 										</li>
 									</ul>
 
-									<div id='at-an-address' class="checkout_button trans_200"><a href="{{ url_for('place_order',id=main)}}">place order</a></div>
-									<script type="text/javascript" src="logic.js"></script>
+									<div id='at-an-address' class="checkout_button trans_200"><a href="{{ url_for('place_order',id=main)}}">place order Adress</a></div>
+									<div id='here' class="checkout_button trans_200"><a href="{{ url_for('place_order',id=main)}}">place order</a></div>
+									<script type="text/javascript" src="/static/js/logic.js"></script>
 								</div>
 							</div>
 

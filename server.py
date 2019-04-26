@@ -14,11 +14,12 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from twilio.rest import Client
 import smtplib
-
+from app import routes
 
 app = Flask(__name__)
 CORS(app)
-#from app import routes
+
+
 
 mongo = MongoClient(port=27017)
 db=mongo.user
@@ -37,6 +38,9 @@ onion_pic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-Nj
 
 gmail_user = 'thella.wala@gmail.com'  
 gmail_password = 'Rahul@idea' 	
+
+if __name__ == '__main__':
+	app.run(host='192.168.43.212',port=9999)
 
 
 @app.route("/")
