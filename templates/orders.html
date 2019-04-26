@@ -35,14 +35,11 @@
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
 					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
-					<li><a href="#">fruits</a></li>
-					<li><a href="#">vegetables</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">vegetables</a></li>
+					<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
 					<li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-					<li><a href="{{ url_for('blog',id=main)}}">blog</a></li>
-					<li><a href="#">contact</a></li>
 					<li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
-					
 				</ul>
 			</nav>
 
@@ -86,11 +83,10 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
-				<li class="menu_mm"><a href="#">fruits</a></li>
-				<li class="menu_mm"><a href="#">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
 				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 				<li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-				<li class="menu_mm"><a href="contact.html">contact</a></li>
 				<li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 			</ul>
 		</nav>
@@ -125,22 +121,15 @@
 		<nav class="sidebar_nav">
 			<ul>
 				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 			</ul>
 		</nav>
 
-		<!-- Search -->
-		<div class="search">
-			<form action="#" class="search_form" id="sidebar_search_form">
-				<input type="text" class="search_input" placeholder="Search" required="required">
-				<button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
-			</form>
-		</div>
+		
 
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
@@ -283,7 +272,7 @@
 									<a href="#"><div>Th<span>Vala</span></div></a>
 								</div>
 								<div class="footer_about_text">
-									<p>Vegetables at your doorstep.</p>
+									<p>Mandi at your doorstep.</p>
 								</div>
 								<div class="cards">
 									<ul class="d-flex flex-row align-items-center justify-content-start">

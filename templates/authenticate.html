@@ -35,11 +35,12 @@
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
 					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
-					<li><a href="#">fruits</a></li>
-					<li><a href="#">vegetables</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">vegetables</a></li>
+					<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
 					<li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-					<li><a href="#">contact</a></li>
+					<li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
+					
 				</ul>
 			</nav>
 
@@ -83,11 +84,11 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
-				<li class="menu_mm"><a href="#">vegetables</a></li>
-				<li class="menu_mm"><a href="#">fruits</a></li>
-				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders</a></li>
-				<li class="menu_mm"><a href="./blog.html">blog</a></li>
-				<li class="menu_mm"><a href="./contact.html">contact</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
+				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 			</ul>
 		</nav>
 		<div class="menu_extra">
@@ -121,11 +122,11 @@
 		<nav class="sidebar_nav">
 			<ul>
 				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my Orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="blog.html">blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 			</ul>
 		</nav>
 

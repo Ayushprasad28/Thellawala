@@ -35,25 +35,18 @@
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
 					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
-					<li><a href="#">fruits</a></li>
-					<li><a href="#">vegetables</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">vegetables</a></li>
+					<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
 					<li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-					<li><a href="#">contact</a></li>
+					<li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 				</ul>
 			</nav>
 
 			<!-- Header Extra -->
 			<div class="header_extra ml-auto d-flex flex-row align-items-center justify-content-start">
 
-				<!-- Cart -->
-				<div class="cart d-flex flex-row align-items-center justify-content-start">
-					<div class="cart_icon"><a href="cart.html">
-						<img src="images/bag.png" alt="">
-						<div class="cart_num">2</div>
-					</a></div>
-				</div>
-
+				
 			</div>
 
 		</div>
@@ -76,12 +69,12 @@
 		</div>
 		<nav class="menu_nav">
 			<ul class="menu_mm">
-				<li class="menu_mm"><a href="index.html">home</a></li>
-				<li class="menu_mm"><a href="#">Vegetables</a></li>
-				<li class="menu_mm"><a href="#">Fruits</a></li>
-				<li class="menu_mm"><a href="#">My Orders</a></li>
-				<li class="menu_mm"><a href="blog.html">Blog</a></li>
-				<li class="menu_mm"><a href="contact.html">Contact</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
+				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
+				<li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 			</ul>
 		</nav>
 		<div class="menu_extra">
@@ -115,32 +108,18 @@
 		<!-- Sidebar Navigation -->
 		<nav class="sidebar_nav">
 			<ul>
-				<li><a href="index.html">Home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">Vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">Fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">My Orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="blog.html">Blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">Contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 			</ul>
 		</nav>
 
-		<!-- Search -->
-		<div class="search">
-			<form action="#" class="search_form" id="sidebar_search_form">
-				<input type="text" class="search_input" placeholder="Search" required="required">
-				<button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
-			</form>
-		</div>
+		
 
-		<!-- Cart -->
-		<div class="cart d-flex flex-row align-items-center justify-content-start">
-			<div class="cart_icon"><a href="cart.html">
-				<img src="images/bag.png" alt="">
-				<div class="cart_num">2</div>
-			</a></div>
-			<div class="cart_text">bag</div>
-			<div class="cart_price">Rs.39.99 (1)</div>
-		</div>
+		
 	</div>
 
 	<!-- Home -->
@@ -271,29 +250,6 @@
 										</li>
 									</ul>
 
-									<!-- Payment Options -->
-									<div class="payment">
-										<div class="payment_options">
-											<label class="payment_option clearfix">Paytm
-												<input type="radio" name="radio">
-												<span class="checkmark"></span>
-											</label>
-											<label class="payment_option clearfix">Cach on delivery
-												<input type="radio" name="radio">
-												<span class="checkmark"></span>
-											</label>
-											<label class="payment_option clearfix">Credit card
-												<input type="radio" name="radio">
-												<span class="checkmark"></span>
-											</label>
-											<label class="payment_option clearfix">Direct bank transfer
-												<input type="radio" checked="checked" name="radio">
-												<span class="checkmark"></span>
-											</label>
-										</div>
-									</div>
-
-
 									<div id='at-an-address' class="checkout_button trans_200"><a href="{{ url_for('place_order',id=main)}}">place order</a></div>
 									<script type="text/javascript" src="logic.js"></script>
 								</div>
@@ -306,29 +262,6 @@
 		</div>
 	</div>
 
-	<!-- Newsletter -->
-
-	<div class="newsletter">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/newsletter.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="newsletter_content text-center">
-						<div class="newsletter_title_container">
-							<div class="newsletter_title">subscribe to our newsletter</div>
-							<div class="newsletter_subtitle">we won't spam, we promise!</div>
-						</div>
-						<div class="newsletter_form_container">
-							<form action="#" id="newsletter_form" class="newsletter_form">
-								<input type="email" class="newsletter_input" placeholder="your e-mail here" required="required">
-								<button class="newsletter_button">submit</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Footer -->
 
@@ -346,7 +279,7 @@
 									<a href="#"><div>Th<span>Vala</span></div></a>
 								</div>
 								<div class="footer_about_text">
-									<p>Vegetables at your doorstep</p>
+									<p>Mandi at your doorstep</p>
 								</div>
 								<div class="cards">
 									<ul class="d-flex flex-row align-items-center justify-content-start">

@@ -37,12 +37,10 @@
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
 					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
-					<li><a href="#">fruits</a></li>
-					<li><a href="#">vegetables</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">vegetables</a></li>
+					<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
 					<li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 					<li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-					<li><a href="{{ url_for('blog',id=main)}}">blog</a></li>
-					<li><a href="#">contact</a></li>
 					<li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 					
 				</ul>
@@ -54,10 +52,11 @@
 
 				<!-- Cart -->
 				<div class="cart d-flex flex-row align-items-center justify-content-start">
-					<div class="cart_icon" action="{{ url_for('open_cart')}}" method="get" >
+					<div class="cart_icon" >
+						<a href="{{ url_for('open_cart')}}" method="get">
 						<i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i>
-						<div class="cart_num">{{quantity}}</div>
-					</a></div>
+						<div class="cart_num">{{quantity}}</div></a>
+					</div>
 				</div>
 
 			</div>
@@ -83,11 +82,10 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
-				<li class="menu_mm"><a href="#">fruits</a></li>
-				<li class="menu_mm"><a href="#">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}">vegetbles</a></li>
+				<li class="menu_mm"><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
 				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
 				<li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
-				<li class="menu_mm"><a href="contact.html">contact</a></li>
 				<li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 				
 			</ul>
@@ -124,24 +122,16 @@
 		<nav class="sidebar_nav">
 			<ul>
 				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('main',id=main)}}">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				
 			</ul>
 		</nav>
 
-		<!-- Search -->
-		<div class="search">
-			<form action="#" class="search_form" id="sidebar_search_form">
-				<input type="text" class="search_input" placeholder="Search" required="required">
-				<button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
-			</form>
-		</div>
-
+		
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
 			<div class="cart_icon"><a href="{{ url_for('open_cart',id=main)}}" method="get">
@@ -226,7 +216,7 @@
 					<div class="col-lg-4 box_col">
 						<div class="box">
 							<div class="box_image"><img src="https://gracesystem.org/wp-content/uploads/2016/10/fresh-produce-e1470234269209.jpg" height = "264" alt=""></div>
-							<div class="box_title trans_200"><a href="categories.html">Fresh Produce</a></div>
+							<div class="box_title trans_200"><a href="#">Fresh Produce</a></div>
 						</div>
 					</div>
 
@@ -234,7 +224,7 @@
 					<div class="col-lg-4 box_col">
 						<div class="box">
 							<div class="box_image"><img src="http://cookingmatters.org/sites/default/files/recipes/Callaway_FruitSalad.jpg" alt=""></div>
-							<div class="box_title trans_200"><a href="categories.html">Seasonal Fruits</a></div>
+							<div class="box_title trans_200"><a href="#">Seasonal Fruits</a></div>
 						</div>
 					</div>
 
@@ -242,7 +232,7 @@
 					<div class="col-lg-4 box_col">
 						<div class="box">
 							<div class="box_image"><img src="https://spanishsabores.com/wp-content/uploads/2013/12/02-IMG_1647.jpg" alt=""></div>
-							<div class="box_title trans_200"><a href="categories.html">Staples</a></div>
+							<div class="box_title trans_200"><a href="#">Staples</a></div>
 						</div>
 					</div>
 
@@ -289,7 +279,7 @@
 											<div class="product_tag">hot</div>
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title">Tomato</a></div>
+											<div class="product_title"><a href="#">Tomato</a></div>
 											<div class="product_price">Rs.39.90</div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_tomato',id=main)}}" method="get">add to cart</a></div>
 										</div>
@@ -302,8 +292,8 @@
 									<div class="product_inner">
 										<div class="product_image"><img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/carrots-vegetables.jpg" height="200" alt=""></div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Carrots</a></div>
-											<div class="product_price">Rs.19.50</div>
+											<div class="product_title"><a href="#">Carrots</a></div>
+											<div class="product_price">Rs.31.10</div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_carrot',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
@@ -318,8 +308,8 @@
 											<div class="product_tag">sale</div>
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Potatoes</a></div>
-											<div class="product_price">Rs.32.20<span>RRP 64.40</span></div>
+											<div class="product_title"><a href="#">Potatoes</a></div>
+											<div class="product_price">Rs.10.90<span>RRP 15.40</span></div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_potato',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
@@ -331,7 +321,7 @@
 											<img src="https://www.hindimeaning.com/wp-content/uploads/2015/08/cucumbers.jpg" height="200" alt="">
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Cucumber</a></div>
+											<div class="product_title"><a href="#">Cucumber</a></div>
 											<div class="product_price">Rs.58.90</div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_cucumber',id=main)}}" method="get">add to cart</a></div>
 										</div>
@@ -344,8 +334,8 @@
 											<img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250__340.jpg" height="200" alt="">
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Broccoli</a></div>
-											<div class="product_price">Rs.79.90</div>
+											<div class="product_title"><a href="#">Broccoli</a></div>
+											<div class="product_price">Rs.45.00</div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_broccoli',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
@@ -358,8 +348,8 @@
 											<div class="product_tag">new</div>
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Peas</a></div>
-											<div class="product_price">Rs.59.90</div>
+											<div class="product_title"><a href="#">Peas</a></div>
+											<div class="product_price">Rs.38.00</div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_peas',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
@@ -371,8 +361,8 @@
 											<img src="https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cabbage.jpg" height="200" alt="">
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Cabbage</a></div>
-											<div class="product_price">Rs.15.90</div>
+											<div class="product_title"><a href="#">Cabbage</a></div>
+											<div class="product_price">Rs.24.90</div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_cabbage',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
@@ -385,8 +375,8 @@
 											<div class="product_tag">sale</div>
 										</div>
 										<div class="product_content text-center">
-											<div class="product_title"><a href="product.html">Onions</a></div>
-											<div class="product_price">Rs.43.99<span>RRP 64.40</span></div>
+											<div class="product_title"><a href="#">Onions</a></div>
+											<div class="product_price">Rs.19.00<span>RRP 23.00</span></div>
 											<div class="product_button ml-auto mr-auto trans_200"><a href="{{ url_for('add_onion',id=main)}}" method="get">add to cart</a></div>
 										</div>
 									</div>
@@ -400,29 +390,7 @@
 		</div>
 	</div>
 
-	<!-- Newsletter -->
 
-	<div class="newsletter">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="/static/images/newsletter.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="newsletter_content text-center">
-						<div class="newsletter_title_container">
-							<div class="newsletter_title">subscribe to our newsletter</div>
-							<div class="newsletter_subtitle">we won't spam, we promise!</div>
-						</div>
-						<div class="newsletter_form_container">
-							<form action="#" id="newsletter_form" class="newsletter_form">
-								<input type="email" class="newsletter_input" placeholder="your e-mail here" required="required">
-								<button class="newsletter_button">submit</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- Footer -->
 
@@ -440,7 +408,7 @@
 									<a href="#"><div>Th<span>Vala</span></div></a>
 								</div>
 								<div class="footer_about_text">
-									<p>Vegetables at your doorstep.</p>
+									<p>Mandi at your doorstep.</p>
 								</div>
 								<div class="cards">
 									<ul class="d-flex flex-row align-items-center justify-content-start">

@@ -13,46 +13,6 @@
 <link rel="stylesheet" type="text/css" href="../static/plugins/OwlCarousel2-2.2.1/animate.css">
 <link rel="stylesheet" type="text/css" href="../static/styles/css/cart.css">
 <link rel="stylesheet" type="text/css" href="../static/styles/css/cart_responsive.css">
-<style>
-.dropbtn {
-  background-color: #ECF4F6;
-  color: black;
-  padding: 14px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 100px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
-</style>
 </head>
 <body>
 
@@ -74,12 +34,12 @@
 			<!-- Navigation -->
 			<nav class="header_nav">
 				<ul class="d-flex flex-row align-items-center justify-content-start">
-					<li><a href="index.html">home</a></li>
-					<li><a href="#">Vegetables</a></li>
-					<li><a href="#">Fruits</a></li>
-					<li><a href="{{ url_for('previous_order',id=main)}}">My Orders</a></li>
-					<li><a href="#">blog</a></li>
-					<li><a href="#">contact</a></li>
+					<li><a href="{{ url_for('main',id=main)}}">home</a></li>
+                            <li><a href="{{ url_for('main',id=main)}}">vegetables</a></li>
+                            <li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
+                            <li><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+                            <li><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
+                            <li><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 				</ul>
 			</nav>
 
@@ -123,11 +83,11 @@
 		<nav class="menu_nav">
 			<ul class="menu_mm">
 				<li class="menu_mm"><a href="{{ url_for('main',id=main)}}" method="get">home</a></li>
-				<li class="menu_mm"><a href="#">vegetables</a></li>
-				<li class="menu_mm"><a href="#">fruits</a></li>
-				<li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
-				<li class="menu_mm"><a href="./blog.html">blog</a></li>
-				<li class="menu_mm"><a href="./contact.html">contact</a></li>
+                <li class="menu_mm"><a href="{{ url_for('main',id=main)}}">vegetbles</a></li>
+                <li class="menu_mm"><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)</a></li>
+                <li class="menu_mm"><a href="{{ url_for('previous_order',id=main)}}">my orders</a></li>
+                <li class="menu_mm"><a href="{{ url_for('pending_order',id=main)}}">pending orders</a></li>
+                <li class="menu_mm"><a href="{{ url_for('login',out='1')}}">Sign out</a></li>
 			</ul>
 		</nav>
 		<div class="menu_extra">
@@ -161,21 +121,14 @@
 		<nav class="sidebar_nav">
 			<ul>
 				<li><a href="{{ url_for('main',id=main)}}" method="get">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">fruits<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="{{ url_for('previous_order',id=main)}}">my Orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="blog.html">blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{ url_for('main',id=main)}}">vegetables<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{ url_for('coming',id=main)}}">fruits (Coming Soon)<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{ url_for('previous_order',id=main)}}" method="get">my orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{ url_for('pending_order',id=main)}}">pending orders<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{ url_for('login',out='1')}}">sign out<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 			</ul>
 		</nav>
 
-		<!-- Search -->
-		<div class="search">
-			<form action="#" class="search_form" id="sidebar_search_form">
-				<input type="text" class="search_input" placeholder="Search" required="required">
-				<button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
-			</form>
-		</div>
 
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
@@ -246,28 +199,14 @@
 									<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start">
 											<div><div class="product_image"><img src={{ value[0] }}></div></div>
-											<div class="product_name"><a href="product.html">{{ key }}</a></div>
-											<div type="hidden" name="demo" placeholder="demo" value=key>
+											<div class="product_name"><b>{{ key }}</b></div>
 										</div>
 										<div class="product_price text-lg-center product_text"><span>Price: </span>{{ value[1] }}</div>
-										
-										<div class="product_quantity_container">
-											<div class="product_quantity ml-lg-auto mr-lg-auto text-center">
-												<div class="dropdown">
-										  <div onclick="myFunction()" class="dropbtn"><span>Quantity: </span>{{ value[2] }}</div>
-										  <div id="myDropdown" class="dropdown-content">
-										    <a href="{{ url_for('change',id=main,product=key,value=1)}}">1</a>
-										    <a href="{{ url_for('change',id=main,product=key,value=2)}}">2</a>
-										    <a href="{{ url_for('change',id=main,product=key,value=3)}}">3</a>
-										    <a href="{{ url_for('change',id=main,product=key,value=4)}}">4</a>
-										    <a href="{{ url_for('change',id=main,product=value[0],value=5)}}">5</a>
-										  </div>
-										</div>
-											</div>
-										</div>
+										<div class="product_price text-lg-center product_text"><span>Quantity: </span>{{ value[2] }}</div>
 										<div class="product_total text-lg-center product_text"><span>Total: </span>{{ value[3] }}</div>
 									</li>
-									
+
+								
 								</ul>
 							</div>
 							{% endfor %}
@@ -308,7 +247,7 @@
 									<a href="#"><div>Th<span>Vala</span></div></a>
 								</div>
 								<div class="footer_about_text">
-									<p>Vegetables at your doorstep.</p>
+									<p>Mandi at your doorstep.</p>
 								</div>
 								<div class="cards">
 									<ul class="d-flex flex-row align-items-center justify-content-start">

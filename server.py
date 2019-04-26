@@ -3,6 +3,7 @@ from flask import request, redirect
 from flask import jsonify
 from flask import render_template
 from flask import send_file
+from flask_cors import CORS
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,9 +13,13 @@ import hashlib
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from twilio.rest import Client
+import smtplib
 
 
 app = Flask(__name__)
+CORS(app)
+#from app import routes
+
 mongo = MongoClient(port=27017)
 db=mongo.user
 Order=mongo.order
@@ -51,6 +56,12 @@ def login():
 	print(out)
 	return render_template('login.html',out=out)
 
+
+@app.route('/coming', methods=['GET','POST'])
+def coming():
+	userId= request.args.get('id')
+	return render_template('ComingSoon.html',main=userId)
+
 @app.route('/forgotPassword.html', methods=['GET','POST'])
 def forgot_pass():
 	return render_template('forgotPassword.html')
@@ -74,19 +85,19 @@ def main():
 			if key=='tomato' :
 				price += (value*39.90)
 			elif key=='carrot' :
-				price += (value*19.50)
+				price += (value*31.10)
 			elif key=='potato' :
-				price += (value*32.20)
+				price += (value*10.90)
 			elif key=='cucumber' :
-				price += (value*59.90)
+				price += (value*38.00)
 			elif key=='broccoli' :
-				price += (value*79.90)
+				price += (value*45.00)
 			elif key=='peas' :
-				price += (value*59.90)
+				price += (value*38.00)
 			elif key=='cabbage' :
-				price += (value*15.90)
+				price += (value*24.90)
 			elif key=='onion' :
-				price += (value*43.99)
+				price += (value*19.00)
 	return render_template('main_page.html',main=userId, quantity =len(orders),price = '₹ '+str(price))
 
 @app.route('/object_id', methods=['GET','POST'])
@@ -186,7 +197,7 @@ def forgot_password():
 			temp_pass += random.choice(string.ascii_letters)
 
 		SUBJECT = 'Temporary Password Recovery'
-		TEXT = 'Dear '+user_name+',\n\nA request to reset the password for your account has been made. \nYour temporary password is '+temp_pass+'\nPlease change it after your first login.\n\nRegards-\nTeam Thella wala.'
+		TEXT = 'Dear '+user_name+',\n\nA request to reset the password for your account has been made. \nYour new password is '+temp_pass+'\n\nRegards-\nTeam Thella wala.'
 		message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT)
 
 		mail = smtplib.SMTP('smtp.gmail.com',587)
@@ -205,7 +216,7 @@ def forgot_password():
 	else :
 		return "Email/Phone Number not found."
 
-	return render_template('login.html')
+	return render_template('login.html',out={})
 
 
 @app.route('/clear_cart', methods=['GET','POST'])
@@ -244,32 +255,32 @@ def open_cart():
 			price += (value*39.90)
 		elif key=='carrot' :
 			arr.append(carrot_pic)
-			arr.append(19.50)
-			price += (value*19.50)
+			arr.append(31.10)
+			price += (value*31.10)
 		elif key=='potato' :
 			arr.append(potato_pic)
-			arr.append(32.20)
-			price += (value*32.20)
+			arr.append(10.90)
+			price += (value*10.90)
 		elif key=='cucumber' :
 			arr.append(cucumber_pic)
-			arr.append(59.90)
-			price += (value*59.90)
+			arr.append(42.00)
+			price += (value*42.00)
 		elif key=='broccoli' :
 			arr.append(broccoli_pic)
-			arr.append(79.90)
-			price += (value*79.90)
+			arr.append(45.00)
+			price += (value*45.00)
 		elif key=='peas' :
 			arr.append(peas_pic)
-			arr.append(59.90)
-			price += (value*59.90)
+			arr.append(38.00)
+			price += (value*38.00)
 		elif key=='cabbage' :
 			arr.append(cabbage_pic)
-			arr.append(15.90)
-			price += (value*15.90)
+			arr.append(24.90)
+			price += (value*24.90)
 		elif key=='onion' :
 			arr.append(onion_pic)
-			arr.append(43.99)
-			price += (value*43.99)
+			arr.append(19.00)
+			price += (value*19.00)
 		arr.append(value)
 		arr.append(arr[-2]*arr[-1])
 		dicti[key] = arr
@@ -528,19 +539,19 @@ def previous_order():
 			if key=='tomato' :
 				price += (value*39.90)
 			elif key=='carrot' :
-				price += (value*19.50)
+				price += (value*31.10)
 			elif key=='potato' :
-				price += (value*32.20)
+				price += (value*10.90)
 			elif key=='cucumber' :
-				price += (value*59.90)
+				price += (value*42.00)
 			elif key=='broccoli' :
-				price += (value*79.90)
+				price += (value*45.00)
 			elif key=='peas' :
-				price += (value*59.90)
+				price += (value*38.00)
 			elif key=='cabbage' :
-				price += (value*15.90)
+				price += (value*24.90)
 			elif key=='onion' :
-				price += (value*43.99)
+				price += (value*19.00)
 
 	return render_template('orders.html',previous_order=order_history,main=userId, invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
 
@@ -552,10 +563,11 @@ def pending_order():
 	dicti = {}
 	counter = 0
 	for x in Order.pending.find({},{"_id": 1, "User_Id": 1, "Status":1, "Delivery":1, "Price":1, "Time":1, "Order":1}):
-		if((x['User_Id'])==userId and x['Status']!='Order Cancel' and x['Status']!='Order Delivered') :
+		if((x['User_Id']==userId) and (x['Status']!='Order Cancel') and (x['Status']!="Order Delivered")) :
 			dicti[counter] = x
 			counter+=1
 			invalid = {}
+			print(x)
 	print(dicti)
 	print("yyyyyyyyyyyyyy")
 
@@ -572,19 +584,19 @@ def pending_order():
 			if key=='tomato' :
 				price += (value*39.90)
 			elif key=='carrot' :
-				price += (value*19.50)
+				price += (value*31.10)
 			elif key=='potato' :
-				price += (value*32.20)
+				price += (value*10.90)
 			elif key=='cucumber' :
-				price += (value*59.90)
+				price += (value*42.00)
 			elif key=='broccoli' :
-				price += (value*79.90)
+				price += (value*45.00)
 			elif key=='peas' :
-				price += (value*59.90)
+				price += (value*38.00)
 			elif key=='cabbage' :
-				price += (value*15.90)
+				price += (value*24.90)
 			elif key=='onion' :
-				price += (value*43.99)
+				price += (value*19.00)
 
 	return render_template('pending_order.html',pending_order=dicti,main=userId,invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
 
@@ -603,21 +615,21 @@ def checkout():
 		if key=='tomato' :
 			price += (value*39.90)
 		elif key=='carrot' :
-			price += (value*19.50)
+			price += (value*31.10)
 		elif key=='potato' :
-			price += (value*32.20)
+			price += (value*10.90)
 		elif key=='cucumber' :
-			price += (value*59.90)
+			price += (value*42.00)
 		elif key=='broccoli' :
-			price += (value*79.90)
+			price += (value*45.00)
 		elif key=='peas' :
-			price += (value*59.90)
+			price += (value*38.00)
 		elif key=='cabbage' :
-			price += (value*15.90)
+			price += (value*24.90)
 		elif key=='onion' :
-			price += (value*43.99)
+			price += (value*19.00)
 
-	if price>150 :
+	if price>99 :
 		shipping = 'Free'
 		total = price
 	else:
@@ -648,32 +660,32 @@ def place_order():
 			price += (value*39.90)
 		elif key=='carrot' :
 			arr.append(carrot_pic)
-			arr.append(19.50)
-			price += (value*19.50)
+			arr.append(31.10)
+			price += (value*31.10)
 		elif key=='potato' :
 			arr.append(potato_pic)
-			arr.append(32.20)
-			price += (value*32.20)
+			arr.append(10.90)
+			price += (value*10.90)
 		elif key=='cucumber' :
 			arr.append(cucumber_pic)
-			arr.append(59.90)
-			price += (value*59.90)
+			arr.append(42.00)
+			price += (value*42.00)
 		elif key=='broccoli' :
 			arr.append(broccoli_pic)
-			arr.append(79.90)
-			price += (value*79.90)
+			arr.append(45.00)
+			price += (value*45.00)
 		elif key=='peas' :
 			arr.append(peas_pic)
-			arr.append(59.90)
-			price += (value*59.90)
+			arr.append(38.00)
+			price += (value*38.00)
 		elif key=='cabbage' :
 			arr.append(cabbage_pic)
-			arr.append(15.90)
-			price += (value*15.90)
+			arr.append(24.90)
+			price += (value*24.90)
 		elif key=='onion' :
 			arr.append(onion_pic)
-			arr.append(43.99)
-			price += (value*43.99)
+			arr.append(19.00)
+			price += (value*19.00)
 		arr.append(value)
 		arr.append(arr[-2]*arr[-1])
 		dicti[key] = arr
@@ -721,8 +733,8 @@ def cancel_order():
 			dicti[counter] = x
 			counter+=1
 			invalid = {}
-	#print(dicti)
-	#print("yyyyyyyyyyyyyy")
+	print(dicti)
+	print("yyyyyyyyyyyyyy")
 
 
 	for x in db.cart.find({},{"_id": 0, "Customer_Id": 1, "Order":1}):
@@ -735,19 +747,19 @@ def cancel_order():
 		if key=='tomato' :
 			price += (value*39.90)
 		elif key=='carrot' :
-			price += (value*19.50)
+			price += (value*31.10)
 		elif key=='potato' :
-			price += (value*32.20)
+			price += (value*10.90)
 		elif key=='cucumber' :
-			price += (value*59.90)
+			price += (value*42.00)
 		elif key=='broccoli' :
-			price += (value*79.90)
+			price += (value*45.00)
 		elif key=='peas' :
-			price += (value*59.90)
+			price += (value*38.00)
 		elif key=='cabbage' :
-			price += (value*15.90)
+			price += (value*24.90)
 		elif key=='onion' :
-			price += (value*43.99)
+			price += (value*19.00)
 
 	return render_template('pending_order.html',pending_order=dicti,main=userId,invalid=invalid, quantity =len(orders),price = '₹ '+str(price))
 
@@ -830,20 +842,28 @@ def enter_OTP():
 		newvalues = { "$set" : {"Status": 'Order Delivered' }}
 		a = Order.pending.update_one(myquery, newvalues)
 
+		user_mail = ''
+		user_name = ''
+
 		for x in db.info.find({},{"_id":1, "email":1, "name" :1}) :
 			if(x['_id']==userId) :
 				user_mail = x['email']
 				user_name = x['name']
 
-		SUBJECT = 'Invoice No: '+orderId+' Delivered'
-		TEXT = 'Dear '+user_name+',\n\nYour Order of Invoice No. '+orderId+' is delivered.\nThank you for shopping with us.\n\nRegards-\nTeam Thella wala.'
-		message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT)
+		try :
+			SUBJECT = 'Invoice No: '+orderId+' Delivered'
+			TEXT = 'Dear '+user_name+',\n\nYour Order of Invoice No. '+orderId+' is delivered.\nThank you for shopping with us.\n\nRegards-\nTeam Thella wala.'
+			message = 'Subject: {}\n\n{}'.format(SUBJECT, TEXT)
 
-		mail = smtplib.SMTP('smtp.gmail.com',587)
-		mail.ehlo()
-		mail.starttls()
-		mail.login(gmail_user, gmail_password)
-		mail.sendmail(gmail_user,user_mail, message)
+			print(user_mail)
+
+			mail = smtplib.SMTP('smtp.gmail.com',587)
+			mail.ehlo()
+			mail.starttls()
+			mail.login(gmail_user, gmail_password)
+			mail.sendmail(gmail_user,user_mail, message)
+		except :
+			print("Error sending the mail to "+user_mail)
 
 		return redirect('previous_order?id='+userId)
 
