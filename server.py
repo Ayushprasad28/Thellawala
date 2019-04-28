@@ -36,8 +36,8 @@ cabbage_pic = "https://www.hindimeaning.com/wp-content/uploads/2012/12/green-cab
 onion_pic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgqu6hdRXn-NjRRA_8Brgw05QHXNHZVrCLb6EQKtM3E_1MHMPr"
 
 
-gmail_user = 'thella.wala@gmail.com'  
-gmail_password = 'Rahul@idea' 	
+gmail_user = ''  #User_name
+gmail_password = '' 	#Password
 
 if __name__ == '__main__':
 	app.run(host='192.168.43.212',port=9999)
@@ -124,8 +124,7 @@ def object_id():
 			return render_template('login.html',out={"Entered password is wrong":0})
 			#return "Wrong Password"
 	except TypeError:
-		return "User not recognized \n Try to Sign Up."
-	#return "Fuck Off"
+		return "User not recognized \n Try to Sign Up." 
 
 @app.route('/signup.html', methods=['GET','POST'])
 def signup():
@@ -787,8 +786,8 @@ def authenticate():
 	print(OTP)
 	encoded_OTP = hashlib.sha512(OTP.encode()).hexdigest()
 
-	account_sid = 'ACe23d56343cab6c39c5a3b3a285361150'
-	auth_token = 'dd9e600c8e0c6e878b8d049672681926'
+	account_sid = '' #Enter your account id
+	auth_token = ''#Enter token
 	client = Client(account_sid, auth_token)
 
 	
